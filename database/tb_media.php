@@ -9,16 +9,55 @@ function add_media($infos)
         return -1;
     }
 
-    $sql = "insert into media (media_id, media_name, upload_time, size, category, user_name) values $infos[media_id], $infos[media_name], $infos[upload_time], $infos[size], $infos[category],$infos[username]"
+    $sql = "INSERT
+            INTO media 
+            (media_id, media_name, upload_time, size, category, user_name) 
+            VALUES 
+            $infos[media_id], $infos[media_name], $infos[upload_time], 
+            $infos[size], $infos[category],$infos[username]";
     if(db_query($sql))
     {
-        return 0;
+        return true;
     }
     else
     {
-        return -1;
+        return false;
     }
-
 }
 
+function get_recent_media()
+{
+    $sql = "SELECT *
+            FROM media
+            ORDER BY upload_time desc
+            LIMIT 4";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+function get_popular_media()
+{
+    $sql = "SELECT *
+            FROM media
+            ORDER BY viewed_time desc
+            LIMIT 8";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
 ?>

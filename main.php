@@ -1,26 +1,31 @@
 <?php
-function generate_slider()
+function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_times)
 {
-    echo'
-						<div class="col-md-3 resent-grid recommended-grid">
-							<div class="resent-grid-img recommended-grid-img">
-								<a href="single.html"><img src="images/r1.jpg" alt="" /></a>
-								<div class="time small-time">
-									<p>2:34</p>
-								</div>
-								<div class="clck small-clck">
-									<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-								</div>
-							</div>
-							<div class="resent-grid-info recommended-grid-info video-info-grid">
-								<h5><a href="single.html" class="title">Varius sit sed viverra viverra nullam nullam interdum metus</a></h5>
-								<ul>
-									<li><p class="author author-info"><a href="#" class="author">John Maniya</a></p></li>
-									<li class="right-list"><p class="views views-info">2,114,200 views</p></li>
-								</ul>
-							</div>
-						</div>
-        ';
+    $html = sprintf("
+	    <div class=\"col-md-3 resent-grid recommended-grid\">
+	        <div class=\"resent-grid-img recommended-grid-img\">
+	            <a href=\"single.html\"><img src=\"images/r1.jpg\" alt=\"\" /></a>
+			    <div class=\"time small-time\">
+				    <p> %d </p>
+			    </div>
+			    <div class=\"clck small-clck\">
+			        <span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>
+			    </div>
+		    </div>
+		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
+			    <h5><a href=\"single.html\" class=\"title\">Varius sit sed viverra viverra nullam nullam interdum metus</a></h5>
+			    <ul>
+				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\">John Maniya</a></p></li>
+				    <li class=\"right-list\"><p class=\"views views-info\">2,114,200 views</p></li>
+				</ul>
+			</div>
+		</div>
+                    
+        ", 
+        $duration 
+    );
+
+    echo $html;
 }
 ?>
 
@@ -33,12 +38,22 @@ function generate_slider()
             </div>
 <?php
 
+include(dirname(__FILE__)."/database/tb_media.php");
+
 $medias = get_recent_media();
 
-generate_slider();
-generate_slider();
-generate_slider();
-generate_slider();
+foreach($medias as $media)
+{
+    generate_slider(
+        $media['media_id'],
+        $media['user_id'],
+        $media['media_name'],
+        $media['duration'],
+        $media['viewed_times']
+    
+    );
+}
+
 ?>
 
 			<div class="clearfix"> </div>
@@ -50,10 +65,20 @@ generate_slider();
 			        <h3>Recommended</h3>
 				</div>
 <?php
-generate_slider();
-generate_slider();
-generate_slider();
-generate_slider();
+
+$medias = get_recent_media();
+
+foreach($medias as $media)
+{
+    generate_slider(
+        $media['media_id'],
+        $media['user_id'],
+        $media['media_name'],
+        $media['duration'],
+        $media['viewed_times']
+    
+    );
+}
 ?>
 		
 
@@ -63,10 +88,20 @@ generate_slider();
 			<div class="recommended-grids">
 	
 <?php
-generate_slider();
-generate_slider();
-generate_slider();
-generate_slider();
+
+$medias = get_recent_media();
+
+foreach($medias as $media)
+{
+    generate_slider(
+        $media['media_id'],
+        $media['user_id'],
+        $media['media_name'],
+        $media['duration'],
+        $media['viewed_times']
+    
+    );
+}
 ?>
 				<div class="clearfix"> </div>
 			</div>
@@ -78,10 +113,20 @@ generate_slider();
 				    <h3>Popular</h3>
 				</div>
 <?php
-generate_slider();
-generate_slider();
-generate_slider();
-generate_slider();
+
+$medias = get_recent_media();
+
+foreach($medias as $media)
+{
+    generate_slider(
+        $media['media_id'],
+        $media['user_id'],
+        $media['media_name'],
+        $media['duration'],
+        $media['viewed_times']
+    
+    );
+}
 ?>
 
 				<div class="clearfix"> </div>
@@ -89,10 +134,21 @@ generate_slider();
 			<div class="recommended-grids">
 	
 <?php
-generate_slider();
-generate_slider();
-generate_slider();
-generate_slider();
+
+$medias = get_recent_media();
+
+foreach($medias as $media)
+{
+    generate_slider(
+        $media['media_id'],
+        $media['user_id'],
+        $media['media_name'],
+        $media['duration'],
+        $media['viewed_times']
+    
+    );
+}
+
 ?>
 		        <div class="clearfix"> </div>
 			</div>

@@ -9,9 +9,14 @@ function db_connect()
         return $conn;
     }
 
-    $config = parse_ini_file('../config.ini');
+    $config = parse_ini_file(dirname(__FILE__).'/../config.ini');
 
-    $conn = mysqli_connect($config['servername'], $config['username'], $config['password'], $config['database']);
+    $conn = mysqli_connect(
+            $config['servername'],
+            $config['username'], 
+            $config['password'],
+            $config['database']
+    );
 
     if (!$conn)
     {
@@ -29,6 +34,24 @@ function db_query($query)
     $result = mysqli_query($conn, $query);
 
     return $result;
+}
+
+function db_select($query)
+{
+    $rows = array();
+    $result = db_query($query);
+
+    if($result === false) 
+    {
+        return false;
+    }
+
+    while ($row = mysqli_fetch_assoc($result))
+    {
+        $rows[] = $row;
+    }
+
+    return $rows;
 }
 
 ?>
