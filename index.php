@@ -29,13 +29,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
   <body>
 
 <?php
-    include("./navbar.php");
+    include("./templates/navbar.php");
 ?>
 <?php
-    include("./sidebar.php");
+    include("./templates/sidebar.php");
 ?>
 <?php
-    include("./main.php");
+    include("./templates/main.php");
 ?>
 
 
