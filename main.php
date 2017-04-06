@@ -1,10 +1,14 @@
 <?php
 function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_times)
 {
+    $config = parse_ini_file(dirname(__FILE__).'/config.ini');
+    
+    $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
+    $href = $config['media_dir_rp'].$user_id . '/' . $media_id;
     $html = sprintf("
 	    <div class=\"col-md-3 resent-grid recommended-grid\">
 	        <div class=\"resent-grid-img recommended-grid-img\">
-	            <a href=\"single.html\"><img src=\"images/r1.jpg\" alt=\"\" /></a>
+	            <a href=\" %s \"><img src=\" %s \" alt=\"\" /></a>
 			    <div class=\"time small-time\">
 				    <p> %d </p>
 			    </div>
@@ -13,16 +17,16 @@ function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_ti
 			    </div>
 		    </div>
 		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-			    <h5><a href=\"single.html\" class=\"title\">Varius sit sed viverra viverra nullam nullam interdum metus</a></h5>
+			    <h5><a href=\" %s \" class=\"title\"> %s  </a></h5>
 			    <ul>
 				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\">John Maniya</a></p></li>
-				    <li class=\"right-list\"><p class=\"views views-info\">2,114,200 views</p></li>
+				    <li class=\"right-list\"><p class=\"views views-info\"> %d views</p></li>
 				</ul>
 			</div>
 		</div>
                     
         ", 
-        $duration 
+        $href, $image_src, $duration, $href, $media_name, $viewed_times 
     );
 
     echo $html;
