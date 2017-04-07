@@ -12,6 +12,50 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 include ("./templates/header.php");
 include ("./templates/navbar.php");
 include ("./templates/sidebar.php");
+include(__DIR__."/database/tb_comment.php");
+include(__DIR__."/database/tb_user.php");
+
+function generate_comment($user_name, $avatar, $content)
+{
+    $html = sprintf("
+				<div class=\"media\">
+				    <h5> %s </h5>
+					<div class=\"media-left\">
+						<a href=\"#\"></a>
+				    </div>
+					<div class=\"media-body\">
+					    <p>wwwwwwwwwww %s </p>
+				    </div>
+				</div>
+            ", $user_name, $content
+        );
+
+    echo $html;
+}
+
+function generate_up_next()
+{
+    $html = sprintf("
+						<div class=\"single-right-grids\">
+							<div class=\"col-md-4 single-right-grid-left\">
+								<a href=\"single.html\"><img src=\"images/r1.jpg\" alt=\"\" /></a>
+							</div>
+							<div class=\"col-md-8 single-right-grid-right\">
+								<a href=\"single.html\" class=\"title\"> Nullam interdum metus</a>
+								<p class=\"author\"><a href=\"#\" class=\"author\">John Maniya</a></p>
+								<p class=\"views\">2,114,200 views</p>
+							</div>
+							<div class=\"clearfix\"> </div>
+						</div>
+        ");
+
+    echo $html;
+}
+
+$media_id = 1;
+
+$comments = get_comments($media_id);
+$comments_count = count(comments);
 
 ?>
 
@@ -72,7 +116,7 @@ include ("./templates/sidebar.php");
 
 					<div class="all-comments">
 						<div class="all-comments-info">
-							<a href="#">All Comments (8,657)</a>
+                        <a href="#">All Comments (<?php echo $comments_count  ?>)</a>
 							<div class="box">
 								<form>
 									<textarea placeholder="Message" required=" "></textarea>
@@ -83,34 +127,11 @@ include ("./templates/sidebar.php");
 						</div>
 						<div class="media-grids">
 <?php
-function generate_comment($user_name, $avatar, $content)
-{
-    $html = sprintf("
-				<div class=\"media\">
-				    <h5> %s </h5>
-					<div class=\"media-left\">
-						<a href=\"#\"></a>
-				    </div>
-					<div class=\"media-body\">
-					    <p> %s </p>
-				    </div>
-				</div>
-            ", $user_name, $content
-        );
 
-    echo $html;
-}
 
-include(__DIR__."/database/tb_comment.php");
-include(__DIR__."/database/tb_user.php");
-
-$media_id = 1;
-
-$comments = get_comments($media_id);
 foreach($comments as $comment)
 {
-    $user_id = (int)$comment['user_id'];
-    echo $user_id;
+    $user_id = $comment['user_id'];
     $content = $comment['content'];
 
     $user_info = get_user_info($user_id);
@@ -138,29 +159,8 @@ foreach($comments as $comment)
 					<h3>Up Next</h3>
         					<div class="single-grid-right">
 <?php
-function generate_up_next()
-{
-    $html = sprintf("
-						<div class=\"single-right-grids\">
-							<div class=\"col-md-4 single-right-grid-left\">
-								<a href=\"single.html\"><img src=\"images/r1.jpg\" alt=\"\" /></a>
-							</div>
-							<div class=\"col-md-8 single-right-grid-right\">
-								<a href=\"single.html\" class=\"title\"> Nullam interdum metus</a>
-								<p class=\"author\"><a href=\"#\" class=\"author\">John Maniya</a></p>
-								<p class=\"views\">2,114,200 views</p>
-							</div>
-							<div class=\"clearfix\"> </div>
-						</div>
-        ");
-
-    echo $html;
-}
-
 generate_up_next();
-
 ?>
-
 
 					</div>
 				</div>
