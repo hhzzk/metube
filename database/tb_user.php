@@ -53,13 +53,16 @@ function update_user($username, $userinfos)
         {
             $sets = $sets . sprintf(" %s = '%s', ", key($userinfos), $userinfo);
         }
-        if is_int($userinfo)
+        if(is_int($userinfo))
         {
             $sets = $sets . sprintf(" %s = '%d', ", key($userinfos), $userinfo);
         }
     }
     
-    $sql = 'update user set '$sets' where username='$username'';
+    $sql = "UPDATE user
+            SET $sets
+            WHERE username=$username";
+
     if(db_query($sql))
     {
         return 0;
@@ -70,6 +73,25 @@ function update_user($username, $userinfos)
     }
 }
 
+function get_user_info($user_id)
+{
+    $sql = "SELECT *
+            FROM user
+            WHERE user_id=$user_id"; 
+
+    $rows = db_select($sql);
+    if($rows == false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows[0];  
+    }
+}
+
+/*
+
 if(add_user("dsd@dg.com", "ddddddddd"))
     echo "add success";
 else
@@ -78,4 +100,5 @@ $a = array(
     'email' => 'email@wwww.com',
     'wang'  => 'hao'
 );
+ */
 ?>
