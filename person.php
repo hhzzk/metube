@@ -11,7 +11,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     include("./templates/header.php");
     include("./templates/navbar.php");
     include("./person/sidebar.php");
-    include("./person/playlist.php");
+    include("./person/uploads.php");
+    //include("./person/subscriptions.php");
+    //include("./person/playlist.php");
 ?>
 
 </html>

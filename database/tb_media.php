@@ -25,6 +25,83 @@ function add_media($infos)
     }
 }
 
+function get_history($user_id)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE media_id IN (
+                SELECT media_id
+                FROM viewed 
+                WHERE user_id=$user_id)";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+function get_download($user_id)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE media_id IN (
+                SELECT media_id
+                FROM download 
+                WHERE user_id=$user_id)";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+function get_liked($user_id)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE media_id IN (
+                SELECT media_id
+                FROM liked
+                WHERE user_id=$user_id)";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+function get_upload($user_id)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE user_id=$user_id";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
 function get_recent_media()
 {
     $sql = "SELECT *
