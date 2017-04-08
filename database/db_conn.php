@@ -54,4 +54,18 @@ function db_select($query)
     return $rows;
 }
 
+// Return integer insert id 
+// Return 0 if no update or no AUTO_INCREMENT field. 
+function db_insert($query)
+{
+    $conn = db_connect();
+
+    $result = mysqli_query($conn, $query);
+
+    $id = mysqli_insert_id($conn);
+
+    return $id; 
+
+}
+
 ?>

@@ -38,7 +38,7 @@
 							});
 						</script>
 					<li><a href="movies.html" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Image</a></li>
-					<li><a href="news.html" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Order</a></li>
+					<li><a href="news.html" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>ALL</a></li>
 				  </ul>
 				  <!-- script-for-menu -->
 						<script>

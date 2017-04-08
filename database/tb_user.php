@@ -19,22 +19,25 @@ function add_user($infos)
 {
     if(count($infos) != 3)
     {
-        return -1;
+        return false;
     }
 
     if(is_user_exist($infos[email])) 
     {
-        return -1; 
+        return false; 
     }
 
-    $sql = "insert into user (user_name, email, password) values ('$infos[username]', '$infos[email]', '$infos[password]')";
-    if(db_query($sql))
+    $sql = "
+        INSERT INTO 
+        user (user_name, email, password) 
+        VALUES ('$infos[user_name]', '$infos[email]', '$infos[password]')";
+    if($id=db_insert($sql))
     {
-        return 0;
+        return $id;
     }
     else
     {
-        return -1;
+        return false;
     }
 
 }
@@ -77,7 +80,9 @@ function get_user_info($user_id)
 {
     $sql = "SELECT *
             FROM user
-            WHERE user_id=$user_id"; 
+            WHERE user_id='$user_id' 
+            OR user_name='$user_id' 
+            OR email='$user_id'"; 
 
     $rows = db_select($sql);
     if($rows == false)
@@ -90,8 +95,8 @@ function get_user_info($user_id)
     }
 }
 
-/*
 
+/* 
 if(add_user("dsd@dg.com", "ddddddddd"))
     echo "add success";
 else
