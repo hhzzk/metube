@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+if(isset($_SESSION['user_name']))
+{
+    $info = get_user_info($_SESSION['user_name']);
+}
+else
+{
+    echo "error";
+}
+
+?>
+
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="main-grids">
@@ -8,27 +22,27 @@
 
 <form class="form-horizontal">
   <div class="form-group">
-    <label class="control-label col-sm-2" for="user_id">User ID:</label>
+  <label class="control-label col-sm-2" for="user_id">User ID</label>
     <div class="col-sm-6">
-      <input type="email" class="form-control" id="user_id" placeholder="User ID">
+      <input type="email" class="form-control" id="user_id" placeholder="<?php echo $info['user_id']; ?>">
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="user_name">User Name:</label>
     <div class="col-sm-6">
-      <input type="email" class="form-control" id="user_name" placeholder="User Name">
+      <input type="email" class="form-control" id="user_name" placeholder="<?php echo $info['user_name']; ?>">
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="email">Email:</label>
     <div class="col-sm-6">
-      <input type="email" class="form-control" id="email" placeholder="Enter email">
+      <input type="email" class="form-control" id="email" placeholder="<?php echo $info['email']; ?>">
     </div>
   </div>
   <div class="form-group">
     <label class="control-label col-sm-2" for="phone">Phone:</label>
     <div class="col-sm-6">
-      <input type="email" class="form-control" id="phone" placeholder="Enter Phone">
+      <input type="email" class="form-control" id="phone" placeholder="<?php echo $info['phone']; ?>">
     </div>
   </div>
   <div class="form-group">
