@@ -11,10 +11,13 @@
     {
     
     }
+    elseif($_GET['main'] == 'channels')
+    {
+        include("./channels.php"); 
+    }
     else
     {
         include("./category.php"); 
-    
     }
 
 ?>

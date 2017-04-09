@@ -81,13 +81,22 @@ function update_user($user_id, $userinfos)
     }
 }
 
+//when user_id equals to 0, it will return all users
 function get_user_info($user_id)
 {
-    $sql = "SELECT *
+    if($user_id == 0)
+    {
+     $sql = "SELECT *
+            FROM user"; 
+    }
+    else
+    {
+      $sql = "SELECT *
             FROM user
             WHERE user_id='$user_id' 
             OR user_name='$user_id' 
-            OR email='$user_id'"; 
+            OR email='$user_id'";    
+    }
 
     $rows = db_select($sql);
     if($rows == false)
@@ -96,23 +105,12 @@ function get_user_info($user_id)
     }
     else
     {
-       return $rows[0];  
+        if($user_id == 0)
+        {
+            return $rows;
+        }
+        return $rows[0];  
     }
 }
 
-/* 
-$infos = [
-"phone" => "12345996"
-];
-update_user(1, $infos);
-
-if(add_user("dsd@dg.com", "ddddddddd"))
-    echo "add success";
-else
-    echo "add fail";
-$a = array(
-    'email' => 'email@wwww.com',
-    'wang'  => 'hao'
-);
- */
 ?>
