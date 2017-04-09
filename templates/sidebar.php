@@ -8,13 +8,12 @@
 			</div>
 				<div class="drop-navigation drop-navigation">
 				  <ul class="nav nav-sidebar">
-					<li class="active"><a href="index.html" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-					<li><a href="history.php" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>History</a></li>
+					<li class="active"><a href="index.php" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
 					<li><a href="#" class="menu1"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>Video<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
 						<ul class="cl-effect-2">
-							<li><a href="movies.php">Movies</a></li>                                             
-							<li><a href="movies.html">Cartoons</a></li>
-							<li><a href="movies.html">Sports</a></li> 
+							<li><a href="index.php?main=movies">Movies</a></li>                                             
+							<li><a href="index.php?main=cartoons">Cartoons</a></li>
+							<li><a href="index.php?main=sports">Sports</a></li> 
 						</ul>
 						<!-- script-for-menu -->
 						<script>
@@ -26,8 +25,8 @@
 						</script>
 					<li><a href="#" class="menu"><span class="glyphicon glyphicon-film glyphicon-music" class="song-icon" aria-hidden="true"></span>Audio<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
 						<ul class="cl-effect-1">
-							<li><a href="sports.html">Songs</a></li>                                             
-							<li><a href="sports.html">TalkShows</a></li>
+							<li><a href="index.php?main=songs">Songs</a></li>                                             
+							<li><a href="index.php?main=talkshows">TalkShows</a></li>
 						</ul>
 						<!-- script-for-menu -->
 						<script>
@@ -37,8 +36,9 @@
 							});
 							});
 						</script>
-					<li><a href="movies.html" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Image</a></li>
-					<li><a href="news.html" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>ALL</a></li>
+					<li><a href="index.php?main=image" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Image</a></li>
+					<li><a href="index.php?main=medias" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Medias</a></li>
+					<li><a href="index.php?main=channels" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Channels</a></li>
 				  </ul>
 				  <!-- script-for-menu -->
 						<script>

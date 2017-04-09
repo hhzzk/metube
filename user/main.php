@@ -162,7 +162,7 @@ foreach($medias as $media)
 
 			<!-- footer -->
 <?php
-    include("./footer.php");
+    //include("./footer.php");
 ?>
 
 			<!-- //footer -->

@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
 include_once("db_conn.php");
 
 function is_user_exist($email)
@@ -42,15 +45,15 @@ function add_user($infos)
 
 }
 
-function update_user($username, $userinfos)
+function update_user($user_id, $userinfos)
 {
     if (!$userinfos)
     {
-        return -1;
+        return false;
     }
 
     $sets = '';
-    foreach($userinfos as $userinfo)
+    while($userinfo = current($userinfos))
     {
         if(is_string($userinfo))
         {
@@ -58,21 +61,23 @@ function update_user($username, $userinfos)
         }
         if(is_int($userinfo))
         {
-            $sets = $sets . sprintf(" %s = '%d', ", key($userinfos), $userinfo);
-        }
+            $sets = $sets . sprintf(" %s = %d, ", key($userinfos), $userinfo);
+        }   
+        next($userinfos);
     }
-    
+    $sets = rtrim($sets, ", "). ' ';
+        
     $sql = "UPDATE user
             SET $sets
-            WHERE username=$username";
+            WHERE user_id=$user_id";
 
     if(db_query($sql))
     {
-        return 0;
+        return true;
     }
     else
     {
-        return -1;
+        return false;
     }
 }
 
@@ -95,8 +100,12 @@ function get_user_info($user_id)
     }
 }
 
-
 /* 
+$infos = [
+"phone" => "12345996"
+];
+update_user(1, $infos);
+
 if(add_user("dsd@dg.com", "ddddddddd"))
     echo "add success";
 else
