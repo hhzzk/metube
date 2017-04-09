@@ -1,13 +1,16 @@
 <?php
 
+session_start();
+
 include_once(__DIR__."/database/tb_user.php");
 
 
-function generate_slider($channel_id, $channel_name)
+//<h5><a href=\"  \" class=\"title\"> Subscribe  </a></h5>
+function generate_slider($user_id, $user_name, $avatar)
 {
     $config = parse_ini_file(__DIR__.'/config.ini');
     
-    $image_src = $config['media_dir_rp'].'playlists.png';
+    $image_src = $config['media_dir_rp'].$user_id.'/avatar/'.$avatar;
     $href = '1';
     //$href = $config['media_dir_rp'].$user_id . '/' . $media_id;
     $html = sprintf("
@@ -21,16 +24,18 @@ function generate_slider($channel_id, $channel_name)
 			    </div>
 		    </div>
 		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-			    <h5><a href=\"  \" class=\"title\">   </a></h5>
+            <div class=\"file\">
+                <a href=\" \"  >Suscribe</a>
+            </div>
 			    <ul>
-				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\"> %s </a></p></li>
-				    <li class=\"right-list\"><p class=\"views views-info\"> </p></li>
+				    <li><p class=\"author author-info\"><a href=\"#\" > %s </a></p></li>
+				    <li class=\"right-list\"><p class=\"views views-info\">100 </p></li>
 				</ul>
 			</div>
 		</div>
                     
         ", 
-        $href, $image_src, $channel_name 
+        $href, $image_src, $user_name 
     );
 
     echo $html;
@@ -45,13 +50,14 @@ function channels_layout()
 
     // Each row has four items
     $count = 4;
-    if(user_infos)
+    if($user_infos)
     {
         foreach($user_infos as $user_info)
         {
             generate_slider(
                 $user_info['user_id'],
-                $user_info['user_name']
+                $user_info['user_name'],
+                $user_info['avatar']
             );
             if(!(--$count))
             {
