@@ -1,4 +1,6 @@
 <?php
+include_once("./database/tb_user.php");
+
 session_start();
 
 if(isset($_SESSION['user_name']))
@@ -10,6 +12,34 @@ else
     echo "error";
 }
 
+$update_infos = array();
+/*
+if(isset($_POST['user_id']))
+{
+    $user_id = $_POST['user_id']); 
+}
+if(isset($_POST['email']))
+{
+    $update_infos['email'] = $_POST['email']); 
+}
+if(isset($_POST['phone']))
+{
+    $update_infos['phone'] = $_POST['phone']); 
+}
+if(isset($_POST['password0']))
+{
+    $update_infos['password0'] = $_POST['password0']); 
+}
+
+if(update_user($user_id, $update_infos))
+{
+    echo "update success";
+}
+else
+{
+    echo "update fail";
+}
+ */
 ?>
 
 
@@ -20,7 +50,7 @@ else
 	            <h3>Profile</h3>
             </div>
 
-<form class="form-horizontal">
+<form class="form-horizontal" method="POST" action="user.php?main=profile">
   <div class="form-group">
   <label class="control-label col-sm-2" for="user_id">User ID</label>
     <div class="col-sm-6">
