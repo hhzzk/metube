@@ -137,4 +137,23 @@ function get_popular_media()
        return $rows;  
     }
 }
+
+function get_media_by_category($category)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE category=$category";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+
 ?>

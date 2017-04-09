@@ -1,7 +1,7 @@
 <?php
 function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_times)
 {
-    $config = parse_ini_file(__DIR__.'/../config.ini');
+    $config = parse_ini_file(__DIR__.'/config.ini');
     
     $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
     $href = $config['media_dir_rp'].$user_id . '/' . $media_id;
@@ -43,7 +43,7 @@ function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_ti
 <?php
 
 
-include(__DIR__."/../database/tb_media.php");
+include(__DIR__."/database/tb_media.php");
 
 $medias = get_recent_media();
 
@@ -162,7 +162,7 @@ foreach($medias as $media)
 
 			<!-- footer -->
 <?php
-    include("./footer.php");
+    //include("./footer.php");
 ?>
 
 			<!-- //footer -->

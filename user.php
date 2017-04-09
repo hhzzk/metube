@@ -23,7 +23,4 @@
             include("./user/profile.php");
             break;
     }
-    //include("./user/profile.php");
-    //include("./person/uploads.php");
-    //include("./person/subscriptions.php");
 ?>

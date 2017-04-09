@@ -1,7 +1,10 @@
 <?php
+
+include_once(__DIR__."/database/tb_media.php");
+
 function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_times)
 {
-    $config = parse_ini_file(__dir__.'/../config.ini');
+    $config = parse_ini_file(__dir__.'/config.ini');
     
     $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
     $href = $config['media_dir_rp'].$user_id . '/' . $media_id;
@@ -31,52 +34,48 @@ function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_ti
 
     echo $html;
 }
-?>
 
+function category_layout()
+{
+    $config = parse_ini_file(dirname(__FILE__).'/config.ini');
+    $category_name = $_GET['main'];
+    $category = $config[$category_name];
+    $medias = get_media_by_category($category);
+
+    // Each row has four items
+    $count = 4;
+    if($medias)
+    {
+        foreach($medias as $media)
+        {
+            generate_slider(
+                $media['media_id'],
+                $media['user_id'],
+                $media['media_name'],
+                $media['duration'],
+                $media['viewed_times']
+            );
+
+            if(!(--$count))
+            {
+                echo "<br><br>";
+                $count = 4;
+            }
+        }
+    }
+}
+
+?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-	            <h3>Create</h3>
+            <h3><?php echo $_GET['main']  ?></h3>
             </div>
-<?php
-
-
-include(__DIR__."/../database/tb_media.php");
-
-$config = parse_ini_file(dirname(__FILE__).'/../config.ini');
-$category_name = $_GET['']
-$medias = get_category($category);
-
-// Each row has four items
-$count = 4;
-foreach($medias as $media)
-{
-    generate_slider(
-        $media['media_id'],
-        $media['user_id'],
-        $media['media_name'],
-        $media['duration'],
-        $media['viewed_times']
-    
-    );
-    if(!(--$count))
-    {
-        echo "<br><br>";
-        $count = 4;
-    }
-}
-?>
+            <?php category_layout() ?>
 		</div>
-
 		</div>
 	</div>
-
-			<!-- footer -->
-<?php
-    include("./footer.php");
-?>
-
-			<!-- //footer -->
+        <?php //include("./footer.php"); ?>
 </div>
