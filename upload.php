@@ -1,8 +1,20 @@
 <?php
-$target_dir = "uploads/";
+
+session_start();
+if(isset($_SESSION['user_id']))
+{
+    $user_id = $_SESSION['user_id'];
+}
+else
+{
+    echo "Please login first";
+}
+
+$target_dir = "../media".$user_id.'/';
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);

@@ -1,70 +1,3 @@
-<?php
-include_once("./database/tb_user.php");
-
-session_start();
-
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-    $user_name = $_POST['user_name']; 
-    $password0 = $_POST['password0']; 
-    
-    // create accout handling
-    if(isset($_POST['signup']))
-    {
-        $email= $_POST['email']; 
-        $password1 = $_POST['password1']; 
-        $infos = [ 
-            "user_name" => $user_name,
-            "password"  => $password0,
-            "email"     => $email
-        ];
-
-        if($user_id=add_user($infos))
-        {
-            $_SESSION['user_name'] = $user_name;
-            $_SESSION["user_id"] = $user_id;
-        }
-        else
-        {
-           echo "add user failed"; 
-        }
-    }
-    // sign in handling
-    else
-    {
-       if($info = get_user_info($user_name))  
-       {
-            if($info['password'] == $password0) 
-            {
-                $_SESSION['user_name'] = $info['user_name'];
-                $_SESSION["user_id"] = $info["user_id"];
-            }
-            else
-            {
-                echo "password error";
-            }
-       }
-       else
-       {
-        echo "user name error";
-       }
-    }
-}
-
-if (isset($_SESSION['user_id']))
-{
-    $login_statue=true;
-}
-else
-{
-    $login_statue=false;
-}
-
-
-
-?>
-
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -84,7 +17,7 @@ else
 				</form>
 			</div>
 
-			<div class="header-top-right" <?php if ($login_statue===true){?>style="display:none"<? } ?> >
+			<div class="header-top-right" <?php if (isset($_SESSION['user_id'])){?>style="display:none"<? } ?> >
 				<div class="file">
 				<!--	<a href="upload.html">Upload</a>-->
 				</div>	
@@ -104,7 +37,7 @@ else
 											</div>
 										</div>
 										<div class="signup">
-                                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+                                        <form method="post" action="login.php" >
 												<input type="text" name="user_name" class="email" placeholder="User Name" required="required" maxlength="10" title="Enter a valid user name" />
 												<input type="text" name="email" class="email" placeholder="Email" required="required" pattern="([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?" title="Enter a valid email"/>
 												<input type="password" name="password0" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
@@ -143,7 +76,7 @@ else
 							</div>
 						</div>
 						<div class="signup">
-                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" >
+                            <form method="post" action="login.php" >
 								<input type="text" name="user_name" class="email" placeholder="Enter email / user name" required="required" />
 								<input type="password" name="password0" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
 								<input name="login" type="submit"  value="LOGIN"/>
@@ -158,7 +91,7 @@ else
 				<div class="clearfix"> </div>
 			</div>
 
-			<div class="header-top-right1"  <?php if ($login_statue===false){?>style="display:none"<? } ?> >
+			<div class="header-top-right1"  <?php if (!isset($_SESSION['user_id'])){?>style="display:none"<? } ?> >
 
 				<div class="file">
                 <a href="upload.php" >Upload</a>

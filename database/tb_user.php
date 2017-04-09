@@ -84,7 +84,7 @@ function update_user($user_id, $userinfos)
 //when user_id equals to 0, it will return all users
 function get_user_info($user_id)
 {
-    if($user_id == 0)
+    if($user_id === 0)
     {
      $sql = "SELECT *
             FROM user"; 
@@ -105,12 +105,11 @@ function get_user_info($user_id)
     }
     else
     {
-        if($user_id == 0)
+        if($user_id === 0)
         {
             return $rows;
         }
         return $rows[0];  
     }
 }
-
 ?>
