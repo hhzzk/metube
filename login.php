@@ -23,6 +23,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         {
             $_SESSION['user_name'] = $user_name;
             $_SESSION["user_id"] = $user_id;
+
+            //create folder for this user
+            $path = '../media/'.$user_id;
+            if(!file_exists($path))
+            {
+                mkdir($path, 0755, true);
+            }
         }
         else
         {
