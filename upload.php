@@ -1,25 +1,11 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<?php session_start(); ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Media Upload</title>
 </head>
-  <body>
-
-    <!--<nav class="navbar navbar-inverse navbar-fixed-top">-->
-	
-	<?php include ("signinnavbar.php"); ?>
-    </nav>
-		<!-- upload -->
+<body>
 					<div class="upload-file">
-							<form method="post" action="media_upload_process.php" enctype="multipart/form-data" >
+							<form method="post" action="upload.php" enctype="multipart/form-data" >
 								  <p style="margin:0; padding:0">
 										<input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
 											Add a Media: <label style="color:#663399"><em> (Each file limit 10M)</em></label><br/>
@@ -46,10 +32,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					font-size:18px;
 				}
 			</style>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
   </body>
 </html>
+
+
+
+<?php
+session_start();
+
+$user_id=$_SESSION['user_id'];
+
+//Create Directory if doesn't exist
+$upload_dir = '../media/' . $user_id . '/';
+if(!file_exists($upload_dir))
+	mkdir($upload_dir, 0757);
+$file_name = basename($FILES['fileToUpload']['name']);
+$upload_file = $upload_dir. '/' . $file_name;
+
+
+	
+?>
