@@ -10,6 +10,7 @@
 										<input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
 											Add a Media: <label style="color:#663399"><em> (Each file limit 10M)</em></label><br/>
 										<input type="file" id="fileToUpload" name="fileToUpload"  size="50"><br/>
+										<input type="file" id="fileCover" name="fileCover"  size="50"><br/>
 										Title:  <input type="text" name="title" /> <br>
 										Keyword: <input type="text" name="keyword" /> <br>
 										<input  type="hidden" /> Description:<br>
@@ -63,7 +64,7 @@ if(isset($_FILES['fileToUpload']))
         $uploadOk = 0;
     }
     // Check file size
-    if ($_FILES['fileToUpload']['size'] > 500000) {
+    if ($_FILES['fileToUpload']['size'] > 10000000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }

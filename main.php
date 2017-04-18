@@ -42,7 +42,6 @@ function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_ti
             </div>
 <?php
 
-
 include(__DIR__."/database/tb_media.php");
 
 $medias = get_recent_media();
@@ -85,8 +84,6 @@ foreach($medias as $media)
     );
 }
 ?>
-		
-
 
 					<div class="clearfix"> </div>
 			</div>
@@ -159,11 +156,4 @@ foreach($medias as $media)
 			</div>
 		</div>
 	</div>
-
-			<!-- footer -->
-<?php
-    //include("./footer.php");
-?>
-
-			<!-- //footer -->
 </div>

@@ -12,8 +12,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 include ("./templates/header.php");
 include ("./templates/navbar.php");
 include ("./templates/sidebar.php");
-include(__DIR__."/database/tb_comment.php");
-include(__DIR__."/database/tb_user.php");
+include("./database/tb_comment.php");
+include("./database/tb_user.php");
 
 function generate_comment($user_name, $avatar, $content)
 {
@@ -67,7 +67,9 @@ $comments_count = count(comments);
 							<h3>Etiam molestie nisl eget consequat pharetra</h3>	
 					</div>
 						<div class="video-grid">
-							<iframe src="https://www.youtube.com/embed/oYiT-vLjhC4" allowfullscreen></iframe>
+                            <video controls>
+                            <source src="../media/4/funny2.mp3" type="video/mp4">
+                            </video>
 						</div>
 					</div>
 					<div class="song-grid-right">
