@@ -4,17 +4,15 @@ include_once("db_conn.php");
 
 function add_media($infos)
 {
-    if(count($infos) != 6)
+    if(count($infos) != 5)
     {
-        return -1;
+        return false;
     }
 
-    $sql = "INSERT
-            INTO media 
-            (media_id, media_name, upload_time, size, category, user_name) 
+    $sql = "INSERT INTO 
+            media (media_name, description, size, category, user_id) 
             VALUES 
-            $infos[media_id], $infos[media_name], $infos[upload_time], 
-            $infos[size], $infos[category],$infos[username]";
+            ('$infos[media_name]','$infos[description]', '$infos[size]', '$infos[category]','$infos[user_id]')";
     if(db_query($sql))
     {
         return true;
