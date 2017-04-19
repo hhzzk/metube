@@ -63,6 +63,24 @@ function get_download($user_id)
     }
 }
 
+function get_medias($order)
+{
+    $sql = "SELECT *
+            FROM media
+            ORDER BY $order desc";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+
 function get_liked($user_id)
 {
     $sql = "SELECT *
@@ -150,6 +168,23 @@ function get_media_by_category($category)
     else
     {
        return $rows;  
+    }
+}
+
+function get_media_by_id($media_id)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE media_id=$media_id";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows[0];  
     }
 }
 

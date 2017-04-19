@@ -22,5 +22,11 @@
         case "profile":
             include("./user/profile.php");
             break;
+        case "contact":
+            include("./user/contact.php");
+            break;
+        case "upload":
+            include("./user/upload.php");
+            break;
     }
 ?>

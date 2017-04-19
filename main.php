@@ -1,10 +1,14 @@
 <?php
-function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_times)
+include(__DIR__."/database/tb_user.php");
+
+function generate_slider($media_id, $user_id, $media_name, $size, $viewed_times)
 {
     $config = parse_ini_file(__DIR__.'/config.ini');
     
+    $info = get_user_info($user_id);
+    $user_name = $info['user_name']; 
     $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
-    $href = $config['media_dir_rp'].$user_id . '/' . $media_id;
+    $href = 'play.php?user_id=' . $user_id . '&media_id=' . $media_id; 
     $html = sprintf("
 	    <div class=\"col-md-3 resent-grid recommended-grid\">
 	        <div class=\"resent-grid-img recommended-grid-img\">
@@ -19,14 +23,14 @@ function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_ti
 		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
 			    <h5><a href=\" %s \" class=\"title\"> %s  </a></h5>
 			    <ul>
-				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\">John Maniya</a></p></li>
+				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\"> %s </a></p></li>
 				    <li class=\"right-list\"><p class=\"views views-info\"> %d views</p></li>
 				</ul>
 			</div>
 		</div>
                     
         ", 
-        $href, $image_src, $duration, $href, $media_name, $viewed_times 
+        $href, $image_src, $size, $href, $media_name, $viewed_times, $user_name 
     );
 
     echo $html;
@@ -52,7 +56,7 @@ foreach($medias as $media)
         $media['media_id'],
         $media['user_id'],
         $media['media_name'],
-        $media['duration'],
+        $media['size'],
         $media['viewed_times']
     
     );

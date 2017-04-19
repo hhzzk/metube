@@ -1,81 +1,82 @@
-<?php
-function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_times)
-{
-    $config = parse_ini_file(__dir__.'/../config.ini');
-    
-    $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
-    $href = $config['media_dir_rp'].$user_id . '/' . $media_id;
-    $html = sprintf("
-	    <div class=\"col-md-3 resent-grid recommended-grid\">
-	        <div class=\"resent-grid-img recommended-grid-img\">
-	            <a href=\" %s \"><img src=\" %s \" alt=\"\" /></a>
-			    <div class=\"time small-time\">
-				    <p> %d </p>
-			    </div>
-			    <div class=\"clck small-clck\">
-			        <span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>
-			    </div>
-		    </div>
-		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-			    <h5><a href=\" %s \" class=\"title\"> %s  </a></h5>
-			    <ul>
-				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\">john maniya</a></p></li>
-				    <li class=\"right-list\"><p class=\"views views-info\"> %d views</p></li>
-				</ul>
-			</div>
-		</div>
-                    
-        ", 
-        $href, $image_src, $duration, $href, $media_name, $viewed_times 
-    );
-
-    echo $html;
-}
-?>
-
-
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-md-offset-2 main">
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-	            <h3>Create</h3>
+	            <h3>Upload file</h3>
             </div>
-<?php
 
+<div class="container" >
 
-include(__DIR__."/../database/tb_media.php");
+<form class="col-sm-5 h5">
 
-$user_id = 1;
-$medias = get_upload($user_id);
+  <div class="form-group ">
+    <label for="exampleInputFile">Multimedia file input</label>
+    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+  </div>
 
-// Each row has four items
-$count = 4;
-foreach($medias as $media)
-{
-    generate_slider(
-        $media['media_id'],
-        $media['user_id'],
-        $media['media_name'],
-        $media['duration'],
-        $media['viewed_times']
-    
-    );
-    if(!(--$count))
-    {
-        echo "<br><br>";
-        $count = 4;
-    }
-}
-?>
-		</div>
+  <div class="form-group ">
+    <label for="exampleInputFile">Choose cover image</label>
+    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+  </div>
 
-		</div>
-	</div>
+  <div class="form-group">
+    <label for="exampleSelect1">Category</label>
+    <select class="form-control" id="exampleSelect1">
+      <option value=1001>Movie</option>
+      <option value=1002>Cartoon</option>
+      <option value=1003>Sport</option>
+      <option value=2001>Song</option>
+      <option value=2002>Talkshow</option>
+      <option value=3000>Image</option>
+    </select>
+  </div>
 
-			<!-- footer -->
-<?php
-    include("./footer.php");
-?>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Keywords</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="keywords">
+    <small id="emailHelp" class="form-text text-muted">Using ';' to seprate and maxmium is 3</small>
+  </div>
 
-			<!-- //footer -->
-</div>
+  <div class="form-group">
+    <label for="exampleTextarea">Description</label>
+    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleSelect1">Who can view or download this media</label>
+    <select class="form-control" id="exampleSelect1">
+      <option>Public</option>
+      <option>Private</option>
+      <option>Friends</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleSelect1">Comment is allowed</label>
+    <select class="form-control" id="exampleSelect1">
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleSelect1">Rate is allowed</label>
+    <select class="form-control" id="exampleSelect1">
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">Users to block</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username; username">
+    <small id="emailHelp" class="form-text text-muted">Using ';' to seprate</small>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+  </div>
+  </div>
+  </div>
+  </div>

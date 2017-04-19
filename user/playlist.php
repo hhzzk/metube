@@ -38,7 +38,7 @@ function generate_slider($playlist_id, $playlist_name)
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-	            <h3>Create</h3>
+	            <button ><h3>Create</h3> </button>
             </div>
 <?php
 

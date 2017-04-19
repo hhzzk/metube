@@ -1,10 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
-<!DOCTYPE HTML>
 <html>
 
 <?php
@@ -14,6 +7,7 @@ include ("./templates/navbar.php");
 include ("./templates/sidebar.php");
 include("./database/tb_comment.php");
 include("./database/tb_user.php");
+include("./database/tb_media.php");
 
 function generate_comment($user_name, $avatar, $content)
 {
@@ -52,7 +46,25 @@ function generate_up_next()
     echo $html;
 }
 
-$media_id = 1;
+
+$config = parse_ini_file(__DIR__.'/config.ini');
+
+$media_id = $_GET['media_id'];
+$user_id = $_GET['user_id'];
+$media = get_media_by_id($media_id);
+$media_name = $media['media_name'];
+$media_description = $media['media_description'];
+$viewed_times = $media['viewed_times']; 
+$source_url = $config['media_dir_rp'].$user_id . '/' . $media_name;
+
+if (strpos($source_url, 'png') !== false) 
+{
+    $media_show = '<img src="' . $source_url . '">'; 
+}
+else
+{
+    $media_show = '<video controls><source src="' . $source_url . '" type="video/mp4"></video>';
+}
 
 $comments = get_comments($media_id);
 $comments_count = count(comments);
@@ -64,12 +76,10 @@ $comments_count = count(comments);
 				<div class="col-sm-8 single-left">
 					<div class="song">
 						<div class="song-info">
-							<h3>Etiam molestie nisl eget consequat pharetra</h3>	
+                        <h3><?php echo $media_name; ?></h3>	
 					</div>
 						<div class="video-grid">
-                            <video controls>
-                            <source src="../media/4/funny2.mp3" type="video/mp4">
-                            </video>
+                            <?php echo $media_show ?>
 						</div>
 					</div>
 					<div class="song-grid-right">
@@ -83,7 +93,7 @@ $comments_count = count(comments);
 								<li><a href="#" class="icon whatsapp-icon">Whatsapp</a></li>
 								<li><a href="#" class="icon like">Like</a></li>
 								<li><a href="#" class="icon comment-icon">Comments</a></li>
-								<li class="view">200 Views</li>
+                                <li class="view"><?php echo $viewed_times ?> Views</li>
 							</ul>
 						</div>
 					</div>
@@ -109,7 +119,7 @@ $comments_count = count(comments);
 								<ul id="myList">
 									<li>
 										<h4>Published on 15 June 2015</h4>
-										<p>Nullam fringilla sagittis tortor ut rhoncus. Nam vel ultricies erat, vel sodales leo. Maecenas pellentesque, est suscipit laoreet tincidunt, ipsum tortor vestibulum leo, ac dignissim diam velit id tellus. Morbi luctus velit quis semper egestas. Nam condimentum sem eget ex iaculis bibendum. Nam tortor felis, commodo faucibus sollicitudin ac, luctus a turpis. Donec congue pretium nisl, sed fringilla tellus tempus in.</p>
+                                        <p> <?php echo $media_description; ?></p>
 									</li>
 
 								</ul>

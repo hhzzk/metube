@@ -75,7 +75,7 @@ function channels_layout()
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-	            <h3>Create</h3>
+	            <h3>Channels</h3>
             </div>
             <?php channels_layout() ?>
 		</div>

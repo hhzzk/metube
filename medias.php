@@ -35,9 +35,11 @@ function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_ti
     echo $html;
 }
 
+
 function medias_layout()
 {
-    $medias = get_media_by_category($category);
+    $order="viewed_times";
+    $medias = get_medias($order);
 
     // Each row has four items
     $count = 4;
@@ -68,9 +70,24 @@ function medias_layout()
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-            <h3><?php echo $_GET['main']  ?></h3>
+
+<div class="container" >
+
+<form class="col-sm-5 h5">
+  <div class="form-group row">
+    <label for="exampleSelect1">Order by</label>
+    <select class="form-control" id="exampleSelect1">
+      <option value=1001>Most-viewed</option>
+      <option value=1002>Most-recently</option>
+      <option value=1003>Size</option>
+      <option value=2001>Name</option>
+    </select>
+  </div>
+</form>
+
+  </div>
             </div>
-            <?php category_layout() ?>
+            <?php medias_layout() ?>
 		</div>
 		</div>
 	</div>
