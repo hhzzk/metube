@@ -31,5 +31,8 @@
         case "message":
             include("./user/message.php");
             break;
+        case "group":
+            include("./user/group.php");
+            break;
     }
 ?>

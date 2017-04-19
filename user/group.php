@@ -2,23 +2,20 @@
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-	            <h3>Send Messages</h3>
+	            <h3>funny vedio1.mp4</h3>
             </div>
 
 <div class="container">
             <div class="col-sm-12">
 		    
-<div class="alert alert-success" role="alert">
-  <strong>Well done!</strong> You successfully read this important alert message.
+<div class="alert alert-success h5" role="alert">
+  <strong>Jinrui:</strong> This vedio is so funny.
 </div>
-<div class="alert alert-info" role="alert">
-  <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+<div class="alert alert-success h5" role="alert">
+  <strong>wang2:</strong> Totally agree.
 </div>
-<div class="alert alert-warning" role="alert">
-  <strong>Warning!</strong> Better check yourself, you're not looking too good.
-</div>
-<div class="alert alert-danger" role="alert">
-  <strong>Oh snap!</strong> Change a few things up and try submitting again.
+<div class="alert alert-success h5" role="alert">
+  <strong>Jinrui:</strong> Haha 
 </div>
 
 		    <div class="panel-footer clearfix">

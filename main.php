@@ -42,7 +42,7 @@ function generate_slider($media_id, $user_id, $media_name, $size, $viewed_times)
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-	            <h3>Recent</h3>
+	            <h3>Result</h3>
             </div>
 <?php
 

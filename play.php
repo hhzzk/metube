@@ -35,9 +35,9 @@ function generate_up_next()
 								<a href=\"single.html\"><img src=\"images/r1.jpg\" alt=\"\" /></a>
 							</div>
 							<div class=\"col-md-8 single-right-grid-right\">
-								<a href=\"single.html\" class=\"title\"> Nullam interdum metus</a>
-								<p class=\"author\"><a href=\"#\" class=\"author\">John Maniya</a></p>
-								<p class=\"views\">2,114,200 views</p>
+								<a href=\"single.html\" class=\"title\"> funny2.mp4 </a>
+								<p class=\"author\"><a href=\"#\" class=\"author\">wang2</a></p>
+								<p class=\"views\">2 views</p>
 							</div>
 							<div class=\"clearfix\"> </div>
 						</div>
@@ -118,7 +118,7 @@ $comments_count = count(comments);
 							<div class="load_more">	
 								<ul id="myList">
 									<li>
-										<h4>Published on 15 June 2015</h4>
+										<h4>Published on 15 Apri 2017</h4>
                                         <p> <?php echo $media_description; ?></p>
 									</li>
 
