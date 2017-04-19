@@ -88,10 +88,10 @@ $comments_count = count(comments);
 							<ul>
 								<li><a href="#" class="icon fb-icon">Facebook</a></li>
 								<li><a href="#" class="icon dribbble-icon">Dribbble</a></li>
-								<li><a href="#" class="icon twitter-icon">Twitter</a></li>
-								<li><a href="#" class="icon pinterest-icon">Pinterest</a></li>
-								<li><a href="#" class="icon whatsapp-icon">Whatsapp</a></li>
-								<li><a href="#" class="icon like">Like</a></li>
+								<li><a href="#" class="icon twitter-icon">Discussion</a></li>
+								<li><a href="#" class="icon pinterest-icon">Download</a></li>
+								<li><a href="#" class="icon whatsapp-icon">1 Dislike</a></li>
+								<li><a href="#" class="icon ">3 Like</a></li>
 								<li><a href="#" class="icon comment-icon">Comments</a></li>
                                 <li class="view"><?php echo $viewed_times ?> Views</li>
 							</ul>

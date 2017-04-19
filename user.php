@@ -28,5 +28,8 @@
         case "upload":
             include("./user/upload.php");
             break;
+        case "message":
+            include("./user/message.php");
+            break;
     }
 ?>
