@@ -1,4 +1,58 @@
+<?php
+session_start();
+
+include_once("database/tb_media.php");
+
+$user_id=$_SESSION['user_id'];
+
+$uploadOk = 1;
+//Create Directory if doesn't exist
+$upload_dir = '../media/' . $user_id . '/';
+if(!file_exists($upload_dir))
+	mkdir($upload_dir, 0757);
+
+if(isset($_FILES['fileToUpload']))
+{
+    $file_name = basename($_FILES['fileToUpload']['name']);
+    $upload_file = $upload_dir. '/' . $file_name;
+
+    // Check if file already exists
+    if (file_exists($upload_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+    // Check file size
+    if ($_FILES['fileToUpload']['size'] > 10000000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+    // if everything is ok, try to upload file
+    } else {
+    if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $upload_file)) {
+    
+        $infos['media_name'] = $file_name;
+        $infos['description'] = $_POST['description'];
+        $infos['size'] = $_FILES['fileToUpload']['size'];
+        $infos['category'] = $_POST['category'];
+        $infos['user_id'] = $user_id;
+
+        if(add_media($infos))
+        {
+            echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+        }
+    } else {
+        echo "Sorry, there was an error uploading your file.";
+    }
+    }
+}
+	
+?>
+
 <div class="col-md-offset-2 main">
+
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
