@@ -1,5 +1,5 @@
 <?php
-include_once("./database/tb_user.php");
+include_once("./database/tb_contact.php");
 
 session_start();
 
@@ -21,7 +21,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     if(!empty($_POST['pwd0']))
     {
         $update_infos['password'] = $_POST['pwd0']; 
-roup</th>
+    }
+}
+
+group</th>
         <th></th>
       </tr>
     </thead>
@@ -59,9 +62,6 @@ roup</th>
 
     </div>
     </div>
-
-
-
 
 		</div>
 
