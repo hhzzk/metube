@@ -1,5 +1,8 @@
 <?php
-function generate_slider($playlist_id, $playlist_name)
+session_start();
+$user_id = $_SESSION["user_id"];
+
+function generate_slider($playlist)
 {
     $config = parse_ini_file(__DIR__.'/../config.ini');
     
@@ -9,24 +12,15 @@ function generate_slider($playlist_id, $playlist_name)
     $html = sprintf("
 	    <div class=\"col-md-3 resent-grid recommended-grid\">
 	        <div class=\"resent-grid-img recommended-grid-img\">
-	            <a href=\" %s \"><img src=\" %s \" alt=\"\" /></a>
-			    <div class=\"time small-time\">
-			    </div>
-			    <div class=\"clck small-clck\">
-			        <span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>
-			    </div>
+	            <a href=\" %s \"><img src=\" %s \" /></a>
 		    </div>
 		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-			    <h5><a href=\"  \" class=\"title\">   </a></h5>
-			    <ul>
-				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\"> %s </a></p></li>
-				    <li class=\"right-list\"><p class=\"views views-info\"> </p></li>
-				</ul>
+			    <a href=\" %s \" class=\"title\">  %s </a>
 			</div>
 		</div>
                     
         ", 
-        $href, $image_src, $playlist_name 
+        $href, $image_src, $href, $playlist_name 
     );
 
     echo $html;
@@ -34,45 +28,85 @@ function generate_slider($playlist_id, $playlist_name)
 ?>
 
 
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-md-offset-2 main">
     <div class="main-grids">
-	    <div class="top-grids">
 	        <div class="recommended-info">
-	            <button ><h3>Create</h3> </button>
-            </div>
+					<a href="#small-dialog5" class="play-icon popup-with-zoom-anim btn btn-primary" id="create_playlist">Create Playlist</a>
+					<a href="#small-dialog6" class="play-icon popup-with-zoom-anim btn btn-danger" id="delete_playlist">Delete Playlist</a>
+                <div class="signin">
+					<div id="small-dialog5" class="mfp-hide">
+						<h3>Create Playlist</h3>
+                            <div class="container">
+                                <form method="post" action="user.php?main=playlist" >
+                                    <div class="form-group row col-sm-4">
+								        <input class="form-control" type="text" name="create_playlist_name" placeholder="Enter Playlist Name" required="required">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-primary"> SUBMIT</button>
+                                        </div>
+                                    </div>
+							    </form>
+                            </div>
+					</div>
+                    <div id="small-dialog6" class="mfp-hide">
+						<h3>Delete Playlist</h3>
+                            <div class="container">
+                                <form method="post" action="user.php?main=playlist" >
+                                    <div class="form-group row col-sm-4">
+								        <input class="form-control" type="text" name="delete_playlist_name" placeholder="Enter Playlist Name" required="required">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-primary"> SUBMIT</button>
+                                        </div>
+                                    </div>
+							    </form>
+                            </div>
+					</div>
+				</div>
+<hr>
 <?php
-
 
 include(__DIR__."/../database/tb_playlist.php");
-$user_id=1;
-$playlists = get_playlists($user_id);
 
-// Each row has four items
-$count = 4;
-foreach($playlists as $playlist)
+if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    generate_slider(
-        $playlist['playlist_id'],
-        $playlist['playlist_name']
-    
-    );
-    if(!(--$count))
+
+    if(isset($_POST['create_playlist_name']))
     {
-        echo "<br><br>";
-        $count = 4;
+        $infos = [
+            'playlist_name' => $_POST['create_playlist_name'], 
+            'user_id' => $user_id
+        ];
+
+        add_playlist($infos);
     }
+    elseif(isset($_POST['delete_playlist_name']))
+    {
+         $infos = [
+            'playlist_name' => $_POST['delete_playlist_name'], 
+            'user_id' => $user_id
+        ];
+
+        del_playlist($infos);   
+    }
+
+
 }
 
+$playlists = get_playlists($user_id);
+
+if($playlists)
+{
+    foreach($playlists as $playlist)
+    {
+        generate_slider($playlist);
+
+        echo "<br><hr>";
+    }
+}
 ?>
 		</div>
-
 		</div>
 	</div>
-
-			<!-- footer -->
-<?php
-    include("./footer.php");
-?>
-
-			<!-- //footer -->
-</div>

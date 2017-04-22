@@ -68,9 +68,7 @@ group</th>
 		</div>
 	</div>
 
-			<!-- footer -->
 <?php
-    //include("./footer.php");
 ?>
 
 			<!-- //footer -->
