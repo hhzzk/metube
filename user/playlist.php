@@ -4,6 +4,35 @@ $user_id = $_SESSION["user_id"];
 
 function generate_slider($playlist)
 {
+<div class="container">
+<table class="table">
+    <thead>
+      <tr>
+        <th>Rule</th>
+        <th>Action</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+	
     $config = parse_ini_file(__DIR__.'/../config.ini');
     
     $image_src = $config['media_dir_rp'].'playlists.png';
