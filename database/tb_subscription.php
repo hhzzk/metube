@@ -4,17 +4,16 @@ include_once("db_conn.php");
 
 function add_subscription($infos)
 {
-    if(count($infos) != 6)
+    if(count($infos) != 2)
     {
         return -1;
     }
 
     $sql = "INSERT
-            INTO media 
-            (media_id, media_name, upload_time, size, category, user_name) 
+            INTO subscription 
+            (user_id, channel_id) 
             VALUES 
-            $infos[media_id], $infos[media_name], $infos[upload_time], 
-            $infos[size], $infos[category],$infos[username]";
+            ('$infos[user_id]', '$infos[channel_id]')";
     if(db_query($sql))
     {
         return true;
@@ -23,6 +22,23 @@ function add_subscription($infos)
     {
         return false;
     }
+}
+
+function delete_subscription($subscription_id)
+{
+    $sql = "DELETE
+            FROM subscription 
+            WHERE subscription_id=$subscription_id";    
+
+    if(db_query($sql))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
 
 function get_subscriptions($user_id)

@@ -1,33 +1,133 @@
 <?php
 session_start();
-$user_id = $_SESSION["user_id"];
+
+include(__DIR__."/../database/tb_playlist.php");
+include(__DIR__."/../database/tb_media.php");
+
+if(isset($_SESSION['user_id']))
+{
+    $user_id = $_SESSION['user_id']; 
+}
+
+function generate_trs($field, $media_id, $playlist_id)
+{
+    $media = get_media_by_id($media_id);
+    $trs = sprintf("
+            <tr class='warning'>
+                <td > 
+                <a href=play.php?media_id=%s>%s</a>  
+                </td>
+                <td>
+                <a href='user.php?main=playlist&playlist=%s&media=%s' type='button' class='btn btn-danger'>Delete</a>
+                </td>
+            </tr>   
+            ",$media_id, $media['media_name'],$playlist_id, $field
+    );
+
+    return $trs;
+}
 
 function generate_slider($playlist)
 {
-    $html = sprintf("
-        <div class=\"container\">
-            <table class=\"table\">
-                <thead>
-                    <tr>
-                        <th>Rule</th>
-                        <th>Action</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                </tr>
-            </tbody>
-            </table>
-        </div>"
-    );
-}
-echo $html;
-?>
 
+    $trs = '';
+    $playlist_id = $playlist['playlist_id'];
+    if($playlist['media_id1'])
+    {
+        $trs .= generate_trs('media_id1', $playlist['media_id1'], $playlist_id);
+    }
+    if($playlist['media_id2'])
+    {
+        $trs .= generate_trs('media_id2', $playlist['media_id2'], $playlist_id);
+    }
+    if($playlist['media_id3'])
+    {
+        $trs .= generate_trs('media_id3', $playlist['media_id3'], $playlist_id);
+    }
+    if($playlist['media_id4'])
+    {
+        $trs .= generate_trs('meida_id4', $playlist['media_id4'], $playlist_id);
+    }
+    if($playlist['media_id5'])
+    {
+        $trs .= generate_trs('media_id5', $playlist['media_id5'], $playlist_id);
+    }
+
+    $html = sprintf("
+            <div class='container h5'>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th>%s</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        %s
+                     </tbody>
+                </table>
+                </div>
+                       ", $playlist['playlist_name'], $trs); 
+
+    echo $html;
+}
+
+function show_playlists()
+{
+
+    if(isset($_SESSION['user_id']))
+    {
+        $user_id = $_SESSION['user_id']; 
+        $playlists = get_playlists($user_id);
+
+        if($playlists)
+        {
+            foreach($playlists as $playlist)
+            {
+                generate_slider($playlist);
+
+                echo "<br><hr>";
+            }
+        }
+    }
+}
+
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+
+    if(isset($_POST['create_playlist_name']))
+    {
+        $infos = [
+            'playlist_name' => $_POST['create_playlist_name'], 
+            'user_id' => $user_id
+        ];
+
+        add_playlist($infos);
+    }
+    elseif(isset($_POST['delete_playlist_name']))
+    {
+         $infos = [
+            'playlist_name' => $_POST['delete_playlist_name'], 
+            'user_id' => $user_id
+        ];
+
+        del_playlist($infos);   
+    }
+
+
+}
+
+if($_SERVER["REQUEST_METHOD"] == "GET")
+{
+    if(isset($_GET['playlist']))
+    {
+        $playlist_id = $_GET['playlist'];
+        $field = $_GET['media'];
+        delete_media_in_playlist($playlist_id, $field);
+    }
+}
+
+?>
 
 <div class="col-md-offset-2 main">
     <div class="main-grids">
@@ -67,47 +167,19 @@ echo $html;
 					</div>
 				</div>
 <hr>
-<?php
-
-include(__DIR__."/../database/tb_playlist.php");
-
-if($_SERVER["REQUEST_METHOD"] == "POST")
-{
-
-    if(isset($_POST['create_playlist_name']))
-    {
-        $infos = [
-            'playlist_name' => $_POST['create_playlist_name'], 
-            'user_id' => $user_id
-        ];
-
-        add_playlist($infos);
-    }
-    elseif(isset($_POST['delete_playlist_name']))
-    {
-         $infos = [
-            'playlist_name' => $_POST['delete_playlist_name'], 
-            'user_id' => $user_id
-        ];
-
-        del_playlist($infos);   
-    }
 
 
-}
+<?php 
 
-$playlists = get_playlists($user_id);
 
-if($playlists)
-{
-    foreach($playlists as $playlist)
-    {
-        generate_slider($playlist);
+show_playlists();
 
-        echo "<br><hr>";
-    }
-}
 ?>
+                    </tbody>
+                </table>
+                </div>
+
+
 		</div>
 		</div>
 	</div>

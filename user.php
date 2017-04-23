@@ -3,7 +3,7 @@
 
     include("./templates/header.php");
     include("./templates/navbar.php");
-    include("./user/sidebar.php");
+   include("./user/sidebar.php");
 
     switch($_GET['main'])
     {

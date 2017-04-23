@@ -79,4 +79,21 @@ function get_playlists($user_id)
     }
 }
 
+function delete_media_in_playlist($playlist_id, $field)
+{
+    $sql = "UPDATE playlist 
+            SET $field='0'
+            WHERE 
+            playlist_id='$playlist_id'";
+    echo $sql;
+    if(db_query($sql))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 ?>

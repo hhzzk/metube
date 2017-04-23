@@ -1,78 +1,126 @@
 <?php
-function generate_slider($channel_id, $channel_name)
+session_start();
+if(isset($_SESSION['user_id']))
 {
-    $config = parse_ini_file(__DIR__.'/../config.ini');
-    
-    $image_src = $config['media_dir_rp'].'playlists.png';
-    $href = '1';
-    //$href = $config['media_dir_rp'].$user_id . '/' . $media_id;
-    $html = sprintf("
-	    <div class=\"col-md-3 resent-grid recommended-grid\">
-	        <div class=\"resent-grid-img recommended-grid-img\">
-	            <a href=\" %s \"><img src=\" %s \" alt=\"\" /></a>
-			    <div class=\"time small-time\">
-			    </div>
-			    <div class=\"clck small-clck\">
-			        <span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>
-			    </div>
-		    </div>
-		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-			    <h5><a href=\"  \" class=\"title\">   </a></h5>
-			    <ul>
-				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\"> %s </a></p></li>
-				    <li class=\"right-list\"><p class=\"views views-info\"> </p></li>
-				</ul>
-			</div>
-		</div>
-                    
-        ", 
-        $href, $image_src, $channel_name 
-    );
-
-    echo $html;
+    $user_id = $_SESSION['user_id']; 
 }
-?>
+include_once("./database/tb_subscription.php");
+include_once("./database/tb_user.php");
 
 
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div class="main-grids">
-	    <div class="top-grids">
-	        <div class="recommended-info">
-	            <h3>Create</h3>
-            </div>
-<?php
-
-
-include(__DIR__."/../database/tb_subscription.php");
-$user_id=1;
-$subscriptions = get_subscriptions($user_id);
-
-// Each row has four items
-$count = 4;
-foreach($subscriptions as $subscription)
+$update_infos = array();
+if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    generate_slider(
-        $subscription['channel_id'],
-        $subscription['channel_name']
-    
-    );
-    if(!(--$count))
+    if(isset($_POST['channel_name']))
     {
-        echo "<br><br>";
-        $count = 4;
+        $channel_name = $_POST['channel_name'];
+        $channel = get_user_info($channel_name);
+        if($channel)
+        {
+            $infos = [
+                'user_id' => $user_id,
+                'channel_id' => $channel['user_id'],
+            ];
+
+            add_subscription($infos);       
+        }
+
     }
 }
 
+if($_SERVER["REQUEST_METHOD"] == "GET")
+{
+    if(isset($_GET['delete']))
+    {
+        $subscription_id = $_GET['delete'];
+        delete_subscription($subscription_id);
+    }
+}
+
+function show_subscription($subscription)
+{
+
+    $subscription_id = $subscription['subscription_id'];
+    $channel_id = $subscription['channel_id'];
+    $channel = get_user_info($channel_id);
+    $channel_name = $channel['user_name'];
+    $html = sprintf("
+                         <tr class=\"warning\">
+                            <td > %s </td>
+                            <td>
+                                <a href='user.php?main=subscription&delete=%s' id=\"delete_contact\" type=\"button\" class=\"btn btn-danger\">Delete</a>
+                            </td>
+                        </tr>   
+                        ", $channel_name, $subscription_id); 
+
+    echo $html;
+}
+
+function show_subscriptions()
+{
+    if(isset($_SESSION['user_id']))
+    {
+        $user_id = $_SESSION['user_id']; 
+        $subscriptions = get_subscriptions($user_id);
+
+        if($subscriptions)
+        {
+            foreach($subscriptions as $subscription) 
+            {
+                show_subscription($subscription);
+            }
+        }   
+    }
+
+}
+
+
 ?>
-		</div>
 
-		</div>
-	</div>
+<div class="col-md-offset-2 main">
+    <div class="main-grids">
+	    <div class="top-grids">
+	        <div class="recommended-info">
+					<a href="#small-dialog7" class="play-icon popup-with-zoom-anim btn btn-primary" id="add_contact">Subscription</a>
 
-			<!-- footer -->
-<?php
-    include("./footer.php");
+                <div class="signin">
+					<div id="small-dialog7" class="mfp-hide">
+						<h3>Subscription</h3>
+                            <div class="container">
+                                <form method="post" action="user.php?main=subscription" >
+                                    <div class="form-group row col-sm-4">
+								        <input class="form-control" type="text" name="channel_name" placeholder="Enter Channelname" required="required">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-primary"> SUBMIT</button>
+                                        </div>
+                                    </div>
+							    </form>
+                            </div>
+					</div>
+
+            </div>
+            <div class="container h5">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="aclrules" name="aclrules">
+<?php 
+
+
+show_subscriptions();
+
 ?>
+                    </tbody>
+                </table>
+                </div>
 
-			<!-- //footer -->
 </div>
+</div>
+</div>
+
