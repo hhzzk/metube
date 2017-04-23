@@ -3,7 +3,7 @@
 
     include("./templates/header.php");
     include("./templates/navbar.php");
-   include("./user/sidebar.php");
+    include("./user/sidebar.php");
 
     switch($_GET['main'])
     {
@@ -13,8 +13,8 @@
         case "subscription":
             include("./user/subscription.php");
             break;
-        case "uploads":
-            include("./user/upload.php");
+        case "uploaded":
+            include("./user/uploaded.php");
             break;
         case "liked":
             include("./user/liked.php");
@@ -33,6 +33,9 @@
             break;
         case "group":
             include("./user/group.php");
+            break;
+        case "history":
+            include("./user/history.php");
             break;
     }
 ?>

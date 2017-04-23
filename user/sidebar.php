@@ -11,7 +11,7 @@
 					<li class="active"><a href="index.php" class="home-icon"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
                     <li><a href="user.php?main=playlist" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>Playlist</a></li>
                     <li><a href="user.php?main=subscription" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Subscription</a></li>
-					<li><a href="user.php?main=upload" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Upload</a></li>
+					<li><a href="user.php?main=uploaded" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Uploaded</a></li>
 					<li><a href="user.php?main=liked" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Liked</a></li>
 					<li><a href="user.php?main=history" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>History</a></li>
 					<li><a href="user.php?main=profile" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Profile</a></li>

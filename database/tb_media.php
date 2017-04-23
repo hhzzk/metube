@@ -29,8 +29,10 @@ function get_history($user_id)
             FROM media
             WHERE media_id IN (
                 SELECT media_id
-                FROM viewed 
-                WHERE user_id=$user_id)";    
+                FROM history 
+                WHERE user_id=$user_id
+            
+            )";    
 
     $rows= db_select($sql);
     if($rows== false)
@@ -101,7 +103,7 @@ function get_liked($user_id)
     }
 }
 
-function get_upload($user_id)
+function get_uploaded($user_id)
 {
     $sql = "SELECT *
             FROM media
