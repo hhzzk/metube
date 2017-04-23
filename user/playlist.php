@@ -4,56 +4,28 @@ $user_id = $_SESSION["user_id"];
 
 function generate_slider($playlist)
 {
-<div class="container">
-<table class="table">
-    <thead>
-      <tr>
-        <th>Rule</th>
-        <th>Action</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-	
-    $config = parse_ini_file(__DIR__.'/../config.ini');
-    
-    $image_src = $config['media_dir_rp'].'playlists.png';
-    $href = '1';
-    //$href = $config['media_dir_rp'].$user_id . '/' . $media_id;
     $html = sprintf("
-	    <div class=\"col-md-3 resent-grid recommended-grid\">
-	        <div class=\"resent-grid-img recommended-grid-img\">
-	            <a href=\" %s \"><img src=\" %s \" /></a>
-		    </div>
-		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-			    <a href=\" %s \" class=\"title\">  %s </a>
-			</div>
-		</div>
-                    
-        ", 
-        $href, $image_src, $href, $playlist_name 
+        <div class=\"container\">
+            <table class=\"table\">
+                <thead>
+                    <tr>
+                        <th>Rule</th>
+                        <th>Action</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>john@example.com</td>
+                </tr>
+            </tbody>
+            </table>
+        </div>"
     );
-
-    echo $html;
 }
+echo $html;
 ?>
 
 

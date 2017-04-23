@@ -10,10 +10,10 @@ function add_contact($infos)
     }
 
     $sql = "INSERT
-            INTO message 
-            (from_user_id, to_user_id, content) 
+            INTO contacts 
+            (user_id, friend_id, group_name) 
             VALUES 
-            $infos[from_user_id], $infos[to_user_id],$infos[content]";
+            ('$infos[user_id]', '$infos[friend_id]', '$infos[group_name]')";
     if(db_query($sql))
     {
         return true;
@@ -24,11 +24,11 @@ function add_contact($infos)
     }
 }
 
-function get_contact($to_user_id)
+function get_contacts($user_id)
 {
     $sql = "SELECT *
-            FROM messages 
-            WHERE to_user_id=$to_user_id";    
+            FROM contacts 
+            WHERE user_id=$user_id";    
 
     $rows= db_select($sql);
     if($rows== false)
@@ -38,6 +38,39 @@ function get_contact($to_user_id)
     else
     {
        return $rows;  
+    }
+}
+
+function delete_contact($contact_id)
+{
+    $sql = "DELETE
+            FROM contacts
+            WHERE contact_id=$contact_id";    
+
+    if(db_query($sql))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+function block_contact($contact_id, $is_block)
+{
+    $sql = "UPDATE contacts
+            SET is_block='$is_block' 
+            WHERE contact_id=$contact_id";    
+
+    if(db_query($sql))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 

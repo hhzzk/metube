@@ -100,10 +100,4 @@ else
 		</div>
 	</div>
 
-			<!-- footer -->
-<?php
-    //include("./footer.php");
-?>
-
-			<!-- //footer -->
 </div>
