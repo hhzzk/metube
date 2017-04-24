@@ -1,6 +1,12 @@
 <?php
     session_start();
 
+    if(!isset($_SESSION['user_id']))
+    {
+        echo "Please login";
+        return;
+    }
+
     include("./templates/header.php");
     include("./templates/navbar.php");
     include("./user/sidebar.php");

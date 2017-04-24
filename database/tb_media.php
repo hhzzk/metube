@@ -228,5 +228,21 @@ function get_media_by_id($media_id)
     }
 }
 
+function increase_viewed($media_id)
+{
+    $sql = "UPDATE media
+            SET viewed_times = viewed_times+1 
+            WHERE media_id=$media_id";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows[0];  
+    }
+}
 
 ?>

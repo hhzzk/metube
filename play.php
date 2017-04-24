@@ -1,10 +1,10 @@
 <html>
-
 <?php
+session_start();
 
 include ("./templates/header.php");
-include ("./templates/navbar.php");
-include ("./templates/sidebar.php");
+//include ("./templates/navbar.php");
+//include ("./templates/sidebar.php");
 include("./database/tb_comment.php");
 include("./database/tb_user.php");
 include("./database/tb_media.php");
@@ -50,12 +50,14 @@ function generate_up_next()
 $config = parse_ini_file(__DIR__.'/config.ini');
 
 $media_id = $_GET['media_id'];
-$user_id = $_GET['user_id'];
 $media = get_media_by_id($media_id);
+$user_id = $media['user_id'];
 $media_name = $media['media_name'];
-$media_description = $media['media_description'];
+$media_description = $media['description'];
 $viewed_times = $media['viewed_times']; 
 $source_url = $config['media_dir_rp'].$user_id . '/' . $media_name;
+$comments = get_comments($media_id);
+$comments_count = count($comments);
 
 if (strpos($source_url, 'png') !== false) 
 {
@@ -66,17 +68,74 @@ else
     $media_show = '<video controls><source src="' . $source_url . '" type="video/mp4"></video>';
 }
 
-$comments = get_comments($media_id);
-$comments_count = count(comments);
+increase_viewed($media_id);
+
+function show_comments($comments)
+{
+    if($comments)
+    {
+        foreach($comments as $comment)
+        {
+            $user_id = $comment['user_id'];
+            $content = $comment['content'];
+
+            $user_info = get_user_info($user_id);
+            if(!$user_info)
+            {
+                continue;
+            }
+
+            generate_comment(
+                $user_info['user_name'], 
+                $user_info['avatar'],
+                $comment['content']);
+        }
+    }
+}
 
 ?>
+<script>
+
+$(document).ready(function () {    
+
+    $('#media_dislike').click(function(event){
+        var data = {
+            type    : "dislike",
+            meida_id : $("#media_id").val() 
+        
+        };
+        var dataToSend = JSON.stringify(data); 
+
+        $.ajax(
+            {
+                url: 'handle.php',
+                type:'GET',
+                data: dataToSend,
+
+                success: function(jsonResponse)
+                {
+                    alert(jsonResponse); 
+                },
+
+                    error: function(){
+                        alert('vote fail');
+                    }
+            });
+    });
+
+
+
+});
+
+
+</script>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div class="show-top-grids">
 				<div class="col-sm-8 single-left">
 					<div class="song">
 						<div class="song-info">
-                        <h3><?php echo $media_name; ?></h3>	
+                        <h3 id='media_id' value='<?php echo $media_id ?>'><?php echo $media_name; ?></h3>	
 					</div>
 						<div class="video-grid">
                             <?php echo $media_show ?>
@@ -90,16 +149,15 @@ $comments_count = count(comments);
 								<li><a href="#" class="icon dribbble-icon">Dribbble</a></li>
 								<li><a href="#" class="icon twitter-icon">Discussion</a></li>
 								<li><a href="#" class="icon pinterest-icon">Download</a></li>
-								<li><a href="#" class="icon whatsapp-icon">1 Dislike</a></li>
+								<li><a id="media_dislike" href="#" class="icon whatsapp-icon">1 Dislike</a></li>
 								<li><a href="#" class="icon ">3 Like</a></li>
 								<li><a href="#" class="icon comment-icon">Comments</a></li>
-                                <li class="view"><?php echo $viewed_times ?> Views</li>
+                                <li class="view"><?php echo $viewed_times+1 ?> Views</li>
 							</ul>
 						</div>
 					</div>
 					<div class="clearfix"> </div>
 					<div class="published">
-						<script src="jquery.min.js"></script>
 							<script>
 								$(document).ready(function () {
 									size_li = $("#myList li").size();
@@ -140,24 +198,7 @@ $comments_count = count(comments);
 						<div class="media-grids">
 <?php
 
-
-foreach($comments as $comment)
-{
-    $user_id = $comment['user_id'];
-    $content = $comment['content'];
-
-    $user_info = get_user_info($user_id);
-    if(!$user_info)
-    {
-        continue;
-    }
-
-    generate_comment(
-        $user_info['user_name'], 
-        $user_info['avatar'],
-        $comment['content']);
-}
-
+show_comments($comments);
 
 
 ?>
@@ -169,20 +210,12 @@ foreach($comments as $comment)
 
 				<div class="col-md-4 single-right">
 					<h3>Up Next</h3>
-        					<div class="single-grid-right">
-<?php
-generate_up_next();
-?>
-
-					</div>
-				</div>
-				<div class="clearfix"> </div>
+        		    <div class="single-grid-right">
+                    <?php generate_up_next(); ?>
+			    </div>
 			</div>
-<?php
-include("./templates/footer.php");
-?>
-
+		<div class="clearfix"> </div>
+	</div>
 		</div>
 		<div class="clearfix"> </div>
-
 </html>

@@ -11,7 +11,7 @@ function generate_slide($media_id, $user_id, $media_name, $datetime, $viewed_tim
     $info = get_user_info($user_id);
     $user_name = $info['user_name']; 
     $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
-    $href = 'play.php?user_id=' . $user_id . '&media_id=' . $media_id; 
+    $href = 'play.php?media_id=' . $media_id; 
     $html = sprintf("
 	    <div class='col-md-3 resent-grid recommended-grid'>
 	        <div class='resent-grid-img recommended-grid-img'>
@@ -36,11 +36,13 @@ function generate_slide($media_id, $user_id, $media_name, $datetime, $viewed_tim
 }
 
 
-function show_slides($type, $args)
+function show_slides($type, $args=NULL)
 {
+    $user_id = NULL;
     if(isset($_SESSION['user_id']))
     {
         $user_id = $_SESSION['user_id']; 
+    }
         $medias = NULL;
 
         switch($type)
@@ -101,6 +103,5 @@ function show_slides($type, $args)
                 }
             }
         }
-    }
 }
 ?>
