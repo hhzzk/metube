@@ -2,11 +2,38 @@
 
 include_once("db_conn.php");
 
+function is_subscription_exist($user_id, $channel_id)
+{
+    if($user_id == $channel_id)
+    {
+        return true;
+    }
+
+    $sql = "SELECT * 
+            FROM subscription
+            WHERE user_id='$user_id' AND
+            channel_id='$channel_id'";
+
+    echo $sql;
+    $result = db_query($sql);
+
+    if(mysqli_num_rows($result) == 0)
+    {
+        return false; 
+    }
+    
+    return true;
+}
+
 function add_subscription($infos)
 {
     if(count($infos) != 2)
     {
-        return -1;
+        return false;
+    }
+    if(is_subscription_exist($infos['user_id'], $infos['channel_id']))
+    {
+        return true;
     }
 
     $sql = "INSERT

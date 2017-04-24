@@ -36,7 +36,7 @@ function generate_slide($media_id, $user_id, $media_name, $datetime, $viewed_tim
 }
 
 
-function show_slides($type)
+function show_slides($type, $args)
 {
     if(isset($_SESSION['user_id']))
     {
@@ -45,6 +45,7 @@ function show_slides($type)
 
         switch($type)
         {
+            // For main page
             case "recent":
                 $medias = get_recent();
                 break;
@@ -54,6 +55,15 @@ function show_slides($type)
             case "popular":
                 $medias = get_popular();
                 break;
+            // For category
+            case "category":
+                $medias = get_media_by_category($args);
+                break;
+            // For media order 
+            case "media_order":
+                $medias = get_medias($args);
+                break;
+            // For user pages
             case "uploaded":
                 $medias = get_uploaded($user_id);
                 break;

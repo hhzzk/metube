@@ -1,8 +1,7 @@
 <?php
-include_once("./database/tb_user.php");
 include_once("./common.php");
-
 ?>
+
 <div class="col-md-offset-2 main">
     <div class="main-grids">
 	    <div class="top-grids">

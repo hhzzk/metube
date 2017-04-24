@@ -1,41 +1,64 @@
 <?php
-
 session_start();
 
 include_once(__DIR__."/database/tb_user.php");
+include_once("./database/tb_subscription.php");
 
+if(isset($_SESSION['user_id']))
+{
+    $user_id = $_SESSION['user_id']; 
+    if($_SERVER["REQUEST_METHOD"] == "GET")
+    {
+        if(isset($_GET['channel_name']))
+        {
+            $channel_name = $_GET['channel_name'];
+            $channel = get_user_info($channel_name);
+            if($channel)
+            {
+                $infos = [
+                    'user_id' => $user_id,
+                    'channel_id' => $channel['user_id'],
+                ];
 
-//<h5><a href=\"  \" class=\"title\"> Subscribe  </a></h5>
+                add_subscription($infos);       
+            }
+        }
+    }
+}
+
 function generate_slider($user_id, $user_name, $avatar)
 {
     $config = parse_ini_file(__DIR__.'/config.ini');
     
-    $image_src = $config['media_dir_rp'].$user_id.'/avatar/'.$avatar;
+    if($avatar)
+    {
+        $image_src = $config['media_dir_rp'].$user_id.'/avatar/'.$avatar;
+    }
+    else
+    {
+        $image_src = $config['media_dir_rp']."avatar.jpg";
+    }
     $href = '1';
-    //$href = $config['media_dir_rp'].$user_id . '/' . $media_id;
     $html = sprintf("
-	    <div class=\"col-md-3 resent-grid recommended-grid\">
-	        <div class=\"resent-grid-img recommended-grid-img\">
-	            <a href=\" %s \"><img src=\" %s \" alt=\"\" /></a>
-			    <div class=\"time small-time\">
-			    </div>
-			    <div class=\"clck small-clck\">
-			        <span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>
+	    <div class='col-md-3 resent-grid recommended-grid'>
+	        <div class='resent-grid-img recommended-grid-img'>
+	            <a href=' %s '><img src=' %s ' /></a>
+			    <div class='time small-time'>
+                <p>  </p>
 			    </div>
 		    </div>
-		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-            <div class=\"file\">
-                <a href=\" \"  >Suscribe</a>
+		    <div class='resent-grid-info recommended-grid-info video-info-grid'>
+            <div class='file'>
+                <a href='index.php?main=channels&channel_name=%s '  >Suscribe</a>
             </div>
 			    <ul>
-				    <li><p class=\"author author-info\"><a href=\"#\" > %s </a></p></li>
-				    <li class=\"right-list\"><p class=\"views views-info\">100 </p></li>
+				    <li><p class='author author-info'><a href='#' > %s </a></p></li>
 				</ul>
 			</div>
 		</div>
                     
         ", 
-        $href, $image_src, $user_name 
+        $href, $image_src, $user_name, $user_name  
     );
 
     echo $html;
@@ -61,7 +84,7 @@ function channels_layout()
             );
             if(!(--$count))
             {
-                echo "<br><br>";
+                echo "<hr>";
                 $count = 4;
             }
         }
@@ -71,12 +94,13 @@ function channels_layout()
 ?>
 
 
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-md-offset-2 main">
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
 	            <h3>Channels</h3>
             </div>
+            <hr>
             <?php channels_layout() ?>
 		</div>
 		</div>

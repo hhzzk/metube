@@ -1,95 +1,41 @@
 <?php
-
-include_once(__DIR__."/database/tb_media.php");
-
-function generate_slider($media_id, $user_id, $media_name, $duration, $viewed_times)
-{
-    $config = parse_ini_file(__dir__.'/config.ini');
-    
-    $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
-    $href = $config['media_dir_rp'].$user_id . '/' . $media_id;
-    $html = sprintf("
-	    <div class=\"col-md-3 resent-grid recommended-grid\">
-	        <div class=\"resent-grid-img recommended-grid-img\">
-	            <a href=\" %s \"><img src=\" %s \" alt=\"\" /></a>
-			    <div class=\"time small-time\">
-				    <p> %d </p>
-			    </div>
-			    <div class=\"clck small-clck\">
-			        <span class=\"glyphicon glyphicon-time\" aria-hidden=\"true\"></span>
-			    </div>
-		    </div>
-		    <div class=\"resent-grid-info recommended-grid-info video-info-grid\">
-			    <h5><a href=\" %s \" class=\"title\"> %s  </a></h5>
-			    <ul>
-				    <li><p class=\"author author-info\"><a href=\"#\" class=\"author\">john maniya</a></p></li>
-				    <li class=\"right-list\"><p class=\"views views-info\"> %d views</p></li>
-				</ul>
-			</div>
-		</div>
-                    
-        ", 
-        $href, $image_src, $duration, $href, $media_name, $viewed_times 
-    );
-
-    echo $html;
-}
-
+include_once("./common.php");
 
 function medias_layout()
 {
     $order="viewed_times";
-    $medias = get_medias($order);
-
-    // Each row has four items
-    $count = 4;
-    if($medias)
+    if(isset($_GET['order']))
     {
-        foreach($medias as $media)
-        {
-            generate_slider(
-                $media['media_id'],
-                $media['user_id'],
-                $media['media_name'],
-                $media['duration'],
-                $media['viewed_times']
-            );
-
-            if(!(--$count))
-            {
-                echo "<br><br>";
-                $count = 4;
-            }
-        }
+        $order = $_GET['order']; 
     }
+    show_slides('media_order', $order);
 }
 
 ?>
 
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-md-offset-2 main">
     <div class="main-grids">
 	    <div class="top-grids">
 	        <div class="recommended-info">
-
-<div class="container" >
-
-<form class="col-sm-5 h5">
-  <div class="form-group row">
-    <label for="exampleSelect1">Order by</label>
-    <select class="form-control" id="exampleSelect1">
-      <option value=1001>Most-viewed</option>
-      <option value=1002>Most-recently</option>
-      <option value=1003>Size</option>
-      <option value=2001>Name</option>
-    </select>
-  </div>
-</form>
-
-  </div>
-            </div>
-            <?php medias_layout() ?>
-		</div>
+                <div class="container" >
+                    <form class="col-sm-5 h5" method='GET' action='index.php'>
+                        <input type="hidden" name="main" value="medias">
+                            <div class="form-group row">
+                                <select class="form-control" id="order" name='order' onchange="this.form.submit()">
+                                    <option selected disabled value="">choose order method</option>
+                                    <option value="upload_time">Most-recently</option>
+                                    <option value="viewed_times">Most-viewed</option>
+                                    <option value="like_times">Most-popular</option>
+                                    <option value="size">Size</option>
+                                    <option value="media_name">Name</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <hr>
+                </div>
+                <?php medias_layout() ?>
+		    </div>
 		</div>
 	</div>
-        <?php //include("./footer.php"); ?>
 </div>
