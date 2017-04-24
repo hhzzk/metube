@@ -19,6 +19,9 @@
         case "liked":
             include("./user/liked.php");
             break;
+        case "disliked":
+            include("./user/disliked.php");
+            break;
         case "profile":
             include("./user/profile.php");
             break;
@@ -36,6 +39,9 @@
             break;
         case "history":
             include("./user/history.php");
+            break;
+        case "downloaded":
+            include("./user/downloaded.php");
             break;
     }
 ?>

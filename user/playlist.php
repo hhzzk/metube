@@ -137,6 +137,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET")
                 <div class="signin">
 					<div id="small-dialog5" class="mfp-hide">
 						<h3>Create Playlist</h3>
+                        <hr>
                             <div class="container">
                                 <form method="post" action="user.php?main=playlist" >
                                     <div class="form-group row col-sm-4">

@@ -12,7 +12,9 @@
                     <li><a href="user.php?main=playlist" class="sub-icon"><span class="glyphicon glyphicon-home glyphicon-hourglass" aria-hidden="true"></span>Playlist</a></li>
                     <li><a href="user.php?main=subscription" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Subscription</a></li>
 					<li><a href="user.php?main=uploaded" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Uploaded</a></li>
+					<li><a href="user.php?main=downloaded" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Downloaded</a></li>
 					<li><a href="user.php?main=liked" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Liked</a></li>
+					<li><a href="user.php?main=disliked" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Disliked</a></li>
 					<li><a href="user.php?main=history" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>History</a></li>
 					<li><a href="user.php?main=profile" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Profile</a></li>
 					<li><a href="user.php?main=message" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Message</a></li>

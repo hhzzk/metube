@@ -45,7 +45,7 @@ function get_history($user_id)
     }
 }
 
-function get_download($user_id)
+function get_downloaded($user_id)
 {
     $sql = "SELECT *
             FROM media
@@ -70,6 +70,26 @@ function get_medias($order)
     $sql = "SELECT *
             FROM media
             ORDER BY $order desc";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+function get_disliked($user_id)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE media_id IN (
+                SELECT media_id
+                FROM disliked
+                WHERE user_id=$user_id)";    
 
     $rows= db_select($sql);
     if($rows== false)
