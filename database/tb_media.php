@@ -140,7 +140,7 @@ function get_uploaded($user_id)
     }
 }
 
-function get_recent_media()
+function get_recent()
 {
     $sql = "SELECT *
             FROM media
@@ -158,12 +158,30 @@ function get_recent_media()
     }
 }
 
-function get_popular_media()
+function get_recommended()
 {
     $sql = "SELECT *
             FROM media
-            ORDER BY viewed_time desc
-            LIMIT 8";    
+            ORDER BY viewed_times desc
+            LIMIT 4";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
+function get_popular()
+{
+    $sql = "SELECT *
+            FROM media
+            ORDER BY viewed_times desc
+            LIMIT 4";    
 
     $rows= db_select($sql);
     if($rows== false)

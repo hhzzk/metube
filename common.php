@@ -45,6 +45,15 @@ function show_slides($type)
 
         switch($type)
         {
+            case "recent":
+                $medias = get_recent();
+                break;
+            case "recommended":
+                $medias = get_recommended();
+                break;
+            case "popular":
+                $medias = get_popular();
+                break;
             case "uploaded":
                 $medias = get_uploaded($user_id);
                 break;
