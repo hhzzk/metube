@@ -13,7 +13,7 @@ function add_comment($infos)
             INTO comments 
             (media_id, user_id, content) 
             VALUES 
-            $infos[media_id], $infos[user_id],$infos[content]";
+            ('$infos[media_id]', '$infos[user_id]','$infos[content]')";
     if(db_query($sql))
     {
         return true;

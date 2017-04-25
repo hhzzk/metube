@@ -14,7 +14,14 @@
     switch($_GET['main'])
     {
         case "playlist":
-            include("./user/playlist.php");
+            if(isset($_GET['media_id']))
+            {
+                include("./user/add_media.php");
+            }
+            else
+            {
+                include("./user/playlist.php");
+            }
             break;
         case "subscription":
             include("./user/subscription.php");

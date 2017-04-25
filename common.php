@@ -4,13 +4,13 @@ session_start();
 include_once("./database/tb_user.php");
 include_once("./database/tb_media.php");
 
-function generate_slide($media_id, $user_id, $media_name, $datetime, $viewed_times)
+function generate_slide($media_id, $user_id, $media_name, $datetime, $viewed_times, $category)
 {
     $config = parse_ini_file(__DIR__.'/config.ini');
     
     $info = get_user_info($user_id);
     $user_name = $info['user_name']; 
-    $image_src = $config['media_dir_rp'].$user_id . '/' . $media_id . '.jpg';
+    $image_src = $config['media_dir_rp'].$category . '.jpg';
     $href = 'play.php?media_id=' . $media_id; 
     $html = sprintf("
 	    <div class='col-md-3 resent-grid recommended-grid'>
@@ -29,7 +29,7 @@ function generate_slide($media_id, $user_id, $media_name, $datetime, $viewed_tim
 			</div>
 		</div>
         ", 
-        $href, $image_src, $datetime, $href, $media_name, $viewed_times, $user_name 
+        $href, $image_src, $datetime, $href, $media_name, $user_name, $viewed_times 
     );
 
     echo $html;
@@ -81,6 +81,10 @@ function show_slides($type, $args=NULL)
             case "history":
                 $medias = get_history($user_id);
                 break;
+            // For search
+            case "search":
+                $medias = basic_search($args);
+                break;
         }
 
         // Each row has four items
@@ -94,7 +98,8 @@ function show_slides($type, $args=NULL)
                     $media['user_id'],
                     $media['media_name'],
                     $media['upload_time'],
-                    $media['viewed_times']
+                    $media['viewed_times'],
+                    $media['category']
                 );
                 if(!(--$count))
                 {

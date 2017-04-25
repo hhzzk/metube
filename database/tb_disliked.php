@@ -9,7 +9,7 @@ function add_disliked($user_id, $media_id)
             (user_id, media_id) 
             VALUES 
             ('$user_id', '$media_id')";
-    echo $sql;
+
     if(db_query($sql))
     {
         return true;
@@ -24,8 +24,8 @@ function is_disliked($user_id, $media_id)
 {
     $sql = "SELECT *
             FROM disliked 
-            WHERE user_id=$user_id AND
-            media_id=$media_id";    
+            WHERE user_id='$user_id' AND 
+            media_id='$media_id'";    
 
     $result = db_query($sql);
 

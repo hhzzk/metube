@@ -18,6 +18,10 @@
     {
         include("./channels.php"); 
     }
+    elseif($_GET['main'] == 'search')
+    {
+        include("./search.php"); 
+    }
     else
     {
         include("./category.php"); 

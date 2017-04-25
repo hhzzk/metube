@@ -13,7 +13,7 @@ function add_message($infos)
             INTO message 
             (from_user_id, to_user_id, content) 
             VALUES 
-            $infos[from_user_id], $infos[to_user_id],$infos[content]";
+            ('$infos[from_user_id]', '$infos[to_user_id]', '$infos[content]')";
     if(db_query($sql))
     {
         return true;
@@ -27,8 +27,8 @@ function add_message($infos)
 function get_messages($to_user_id)
 {
     $sql = "SELECT *
-            FROM messages 
-            WHERE to_user_id=$to_user_id";    
+            FROM message 
+            WHERE to_user_id='$to_user_id'";    
 
     $rows= db_select($sql);
     if($rows== false)

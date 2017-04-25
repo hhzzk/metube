@@ -4,15 +4,10 @@ include_once("db_conn.php");
 
 function add_media($infos)
 {
-    if(count($infos) != 5)
-    {
-        return false;
-    }
-
     $sql = "INSERT INTO 
-            media (media_name, description, size, category, user_id) 
+            media (media_name, description, size, category, user_id, share, keyword) 
             VALUES 
-            ('$infos[media_name]','$infos[description]', '$infos[size]', '$infos[category]','$infos[user_id]')";
+            ('$infos[media_name]','$infos[description]', '$infos[size]', '$infos[category]','$infos[user_id]', '$infos[share]', '$infos[keyword]')";
     if(db_query($sql))
     {
         return true;
@@ -211,6 +206,23 @@ function get_media_by_category($category)
     }
 }
 
+function get_media_by_keyword($keyword)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE keyword='$keyword'";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
 function get_media_by_id($media_id)
 {
     $sql = "SELECT *
@@ -234,14 +246,13 @@ function increase_like($media_id)
             SET like_times = like_times+1 
             WHERE media_id=$media_id";    
 
-    $rows= db_select($sql);
-    if($rows== false)
+    if(db_query($sql))
     {
-        return false;
+        return true;
     }
     else
     {
-       return $rows[0];  
+        return false;
     }
 }
 
@@ -249,16 +260,15 @@ function increase_dislike($media_id)
 {
     $sql = "UPDATE media
             SET dislike_times = dislike_times+1 
-            WHERE media_id=$media_id";    
+            WHERE media_id='$media_id'";    
 
-    $rows= db_select($sql);
-    if($rows== false)
+    if(db_query($sql))
     {
-        return false;
+        return true;
     }
     else
     {
-       return $rows[0];  
+        return false;
     }
 }
 
@@ -268,6 +278,23 @@ function increase_viewed($media_id)
             SET viewed_times = viewed_times+1 
             WHERE media_id=$media_id";    
 
+    if(db_query($sql))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function basic_search($search_text)
+{
+    $sql = "SELECT *
+            FROM media
+            WHERE media_name 
+            RLIKE '.*${search_text}.*'"; 
+
     $rows= db_select($sql);
     if($rows== false)
     {
@@ -275,7 +302,7 @@ function increase_viewed($media_id)
     }
     else
     {
-       return $rows[0];  
+       return $rows;  
     }
 }
 

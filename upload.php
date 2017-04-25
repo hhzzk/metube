@@ -1,40 +1,3 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Media Upload</title>
-</head>
-<body>
-					<div class="upload-file">
-							<form method="post" action="upload.php" enctype="multipart/form-data" >
-								  <p style="margin:0; padding:0">
-										<input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
-											Add a Media: <label style="color:#663399"><em> (Each file limit 2M)</em></label><br/>
-										<input type="file" id="fileToUpload" name="fileToUpload"  size="50"><br/>
-										Title:  <input type="text" name="title" /> <br>
-										Keyword: <input type="text" name="keyword" /> <br>
-										<input  type="hidden" /> Description:<br>
-										<textarea name='description' cols="50" rows="10"> </textarea>
-										<p><b> Please choose how to share the file: </b></p>
-                                        <select name="share_method">
-                                            <option value="public">Public</option>
-                                            <option value="private">Private</option>
-                                        </select>
-										<p><b> Please choose category: </b></p>
-                                        <select name="category">
-                                            <option value=1001>Movie</option>
-                                            <option value=1002>Cartoon</option>
-                                            <option value=1003>Sport</option>
-                                            <option value=2001>Song</option>
-                                            <option value=2002>Talkshow</option>
-                                            <option value=3000>Image</option>
-                                        </select>
-										<input value="Upload" name="submit" type="submit" /><br>
-								  </p>
-							</form>
-					</div>
-
-</body>
-</html>
 
 
 
@@ -57,7 +20,7 @@ if(isset($_FILES['fileToUpload']))
     $upload_file = $upload_dir. '/' . $file_name;
 
     // Check file size
-    if ($_FILES['fileToUpload']['size'] > 500000) {
+    if ($_FILES['fileToUpload']['size'] > 50000000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
@@ -72,8 +35,8 @@ if(isset($_FILES['fileToUpload']))
         $infos['description'] = $_POST['description'];
         $infos['size'] = $_FILES['fileToUpload']['size'];
         $infos['category'] = $_POST['category'];
-        //$infos['share'] =    $_POST['share_method'];
-        //$infos['keyword'] = $_POST['keyword'];
+        $infos['share'] =    $_POST['share_method'];
+        $infos['keyword'] = $_POST['keyword'];
         $infos['user_id'] = $user_id;
 
         if(add_media($infos))
@@ -87,3 +50,46 @@ if(isset($_FILES['fileToUpload']))
 }
 	
 ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Media Upload</title>
+</head>
+<body>
+<div class="upload-file">
+    <form method="post" action="upload.php" enctype="multipart/form-data" >
+        <p style="margin:0; padding:0">
+        <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+        Add a Media: <label style="color:#663399"><em> (Each file limit 2M)</em></label><br/>
+        <input type="file" id="fileToUpload" name="fileToUpload"  size="50"><br/>
+            Title:  <input type="text" name="title" /> <br>
+
+        Keyword: <input type="text" id="keyword" name="keyword" /> <br>
+
+        <input  type="hidden" /> Description:<br>
+        <textarea name='description' cols="50" rows="10"> </textarea>
+
+        <p><b> Please choose how to share the file: </b></p>
+        <select id="share_method" name="share_method">
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+        </select>
+
+        <p><b> Please choose category: </b></p>
+        <select name="category">
+            <option value=1001>Movie</option>
+            <option value=1002>Cartoon</option>
+            <option value=1003>Sport</option>
+            <option value=2001>Song</option>
+            <option value=2002>Talkshow</option>
+            <option value=3000>Image</option>
+        </select>
+<input value="Upload" name="submit" type="submit" /><br>
+</p>
+</form>
+</div>
+
+</body>
+</html>
+

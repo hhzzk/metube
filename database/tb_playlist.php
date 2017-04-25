@@ -85,7 +85,6 @@ function delete_media_in_playlist($playlist_id, $field)
             SET $field='0'
             WHERE 
             playlist_id='$playlist_id'";
-    echo $sql;
     if(db_query($sql))
     {
         return true;
@@ -94,6 +93,65 @@ function delete_media_in_playlist($playlist_id, $field)
     {
         return false;
     }
+}
+
+function add_media_to_playlist($playlist_id, $media_id)
+{
+    $playlist = get_playlist($playlist_id);
+    if(!$playlist)
+    {   
+        return false;
+    }
+
+    if( $playlist["media_id1"] == $media_id or
+        $playlist["media_id2"] == $media_id or
+        $playlist["media_id3"] == $media_id or
+        $playlist["media_id4"] == $media_id or
+        $playlist["media_id5"] == $media_id
+    )
+    {
+        return false;
+    }
+
+    $field = "";
+    if(!$playlist['media_id1'])
+    {
+        $field = 'media_id1';
+    }
+    if(!$playlist['media_id2'])
+    {
+        $field = 'media_id2';
+    }
+    if(!$playlist['media_id3'])
+    {
+        $field = 'media_id3';
+    }
+    if(!$playlist['media_id4'])
+    {
+        $field = 'media_id4';
+    }
+    if(!$playlist['media_id5'])
+    {
+        $field = 'media_id5';
+    }
+    if(!$field)
+    {
+        return false;
+    }
+
+    $sql = "UPDATE playlist 
+            SET $field='$media_id'
+            WHERE 
+            playlist_id='$playlist_id'";
+    if(db_query($sql))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
 
 ?>

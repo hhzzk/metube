@@ -30,14 +30,7 @@ function generate_slider($user_id, $user_name, $avatar)
 {
     $config = parse_ini_file(__DIR__.'/config.ini');
     
-    if($avatar)
-    {
-        $image_src = $config['media_dir_rp'].$user_id.'/avatar/'.$avatar;
-    }
-    else
-    {
-        $image_src = $config['media_dir_rp']."avatar.jpg";
-    }
+    $image_src = $config['media_dir_rp']."/channel.jpg";
     $href = '1';
     $html = sprintf("
 	    <div class='col-md-3 resent-grid recommended-grid'>

@@ -113,6 +113,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
         del_playlist($infos);   
     }
+    elseif(isset($_POST['addmedia_media_id']))
+    {
+        $media_id = $_POST['addmedia_media_id'];
+        $playlist_id = $_POST['addmedia_playlist_id'];
+        add_media_to_playlist($playlist_id, $media_id);
+    }
 
 
 }

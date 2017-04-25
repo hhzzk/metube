@@ -11,8 +11,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 			<div class="top-search">
-				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="Search...">
+				<form class="navbar-form navbar-right" method='GET', action="index.php?main=search">
+					<input name="search_text" type="text" class="form-control" placeholder="Search...">
+					<input name="main" type="hidden" value="search">
 					<input type="submit" value=" ">
 				</form>
 			</div>

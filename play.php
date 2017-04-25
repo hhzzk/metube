@@ -8,44 +8,7 @@ include ("./templates/sidebar.php");
 include("./database/tb_comment.php");
 include("./database/tb_user.php");
 include("./database/tb_media.php");
-
-function generate_comment($user_name, $avatar, $content)
-{
-    $html = sprintf("
-				<div class=\"media\">
-				    <h5> %s </h5>
-					<div class=\"media-left\">
-						<a href=\"#\"></a>
-				    </div>
-					<div class=\"media-body\">
-					    <p>wwwwwwwwwww %s </p>
-				    </div>
-				</div>
-            ", $user_name, $content
-        );
-
-    echo $html;
-}
-
-function generate_up_next()
-{
-    $html = sprintf("
-						<div class=\"single-right-grids\">
-							<div class=\"col-md-4 single-right-grid-left\">
-								<a href=\"single.html\"><img src=\"images/r1.jpg\" alt=\"\" /></a>
-							</div>
-							<div class=\"col-md-8 single-right-grid-right\">
-								<a href=\"single.html\" class=\"title\"> funny2.mp4 </a>
-								<p class=\"author\"><a href=\"#\" class=\"author\">wang2</a></p>
-								<p class=\"views\">2 views</p>
-							</div>
-							<div class=\"clearfix\"> </div>
-						</div>
-        ");
-
-    echo $html;
-}
-
+include("./database/tb_history.php");
 
 $config = parse_ini_file(__DIR__.'/config.ini');
 
@@ -58,20 +21,83 @@ $viewed_times = $media['viewed_times'];
 $dislike_times = $media['dislike_times']; 
 $like_times = $media['like_times']; 
 $upload_time = $media['upload_time']; 
+$keyword = $media['keyword']; 
 $source_url = $config['media_dir_rp'].$user_id . '/' . $media_name;
 $comments = get_comments($media_id);
 $comments_count = count($comments);
 
-if (strpos($source_url, 'png') !== false) 
+if (strpos($source_url, 'jpg') !== false) 
 {
     $media_show = '<img src="' . $source_url . '">'; 
 }
 else
 {
-    $media_show = '<video controls><source src="' . $source_url . '" type="video/mp4"></video>';
+    $media_show = '<video width="600" height="420" controls><source src="' . $source_url . '" type="video/mp4"></video>';
 }
 
 increase_viewed($media_id);
+add_viewed($user_id, $media_id);
+
+function generate_up_next($media_id,$user_id, $media_name, $viewed_times, $category)
+{
+    $config = parse_ini_file(__DIR__.'/config.ini');
+    $info = get_user_info($user_id);
+    $user_name = $info['user_name']; 
+    $href = 'play.php?media_id=' . $media_id; 
+    $image_src = $config['media_dir_rp'].$category . '.jpg';
+    $html = sprintf("
+						<div class=\"single-right-grids\">
+							<div class=\"col-md-4 single-right-grid-left\">
+								<a href=\"%s\"><img src=\"%s\" alt=\"\" /></a>
+							</div>
+							<div class=\"col-md-8 single-right-grid-right\">
+								<a href=\"%s\" class=\"title\"> %s </a>
+								<p class=\"author\"><a href=\"#\" class=\"author\">%s</a></p>
+								<p class=\"views\">%d views</p>
+							</div>
+							<div class=\"clearfix\"> </div>
+						</div>
+                        ",
+                    $href, $image_src, $href, $media_name, $user_name, $viewed_times 
+                    );
+
+    echo $html;
+}
+
+function show_up_nexts($keyword)
+{
+   $medias = get_media_by_keyword($keyword); 
+   if($medias)
+   {
+       foreach($medias as $media)
+       {
+           generate_up_next(
+                $media['media_id'],
+                $media['user_id'],
+                $media['media_name'],
+                $media['viewed_times'],
+                $media['category']);
+        }
+    }
+}
+
+function generate_comment($user_name, $avatar, $content)
+{
+    $html = sprintf("
+				<div class=\"media\">
+				    <h5> %s </h5>
+					<div class=\"media-left\">
+						<a href=\"#\"></a>
+				    </div>
+					<div class=\"media-body\">
+					    <p> %s </p>
+				    </div>
+				</div>
+            ", $user_name, $content
+        );
+
+    echo $html;
+}
 
 function show_comments($comments)
 {
@@ -100,9 +126,8 @@ function show_comments($comments)
 <script>
 
 $(document).ready(function () {    
-    $('#add_comment').submit(function(e){
+    $('#add_comment').on('submit', function(e){
         e.preventDefault();
-        alert("dddd");
         var data = {
             type    : "comment",
             media_id : $("#media_id").attr("value"), 
@@ -124,13 +149,13 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        $('#show_comment').html(data.msg); 
+                        var html = "<div class='media'><h5>"+ data.user_name +"</h5><div class='media-left'><a href='#'></a></div><div class='media-body'><p>"+ data.content +"</p></div></div>"
+                        $('#show_comment').prepend(html); 
                     }
-                    //var dislike = parseInt($('#media_dislike').text());
                 },
 
                     error: function(){
-                        alert('vote failed');
+                        alert('comment failed');
                     }
             });
         return false;
@@ -140,7 +165,6 @@ $(document).ready(function () {
         var data = {
             type    : "dislike",
             media_id : $("#media_id").attr("value") 
-        
         };
 
         $.ajax(
@@ -157,9 +181,8 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        $('#media_dislike').text(data.msg); 
+                        $('#media_dislike').text(data.msg+' dislike'); 
                     }
-                    //var dislike = parseInt($('#media_dislike').text());
                 },
 
                     error: function(){
@@ -188,7 +211,7 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        $('#media_like').text(data.msg); 
+                        $('#media_like').text(data.msg+ ' like'); 
                     }
                 },
 
@@ -199,9 +222,6 @@ $(document).ready(function () {
     });
 });
 
-
-
-});
 
 
 </script>
@@ -222,17 +242,18 @@ $(document).ready(function () {
 							<h5>Share this</h5>
 							<ul>
 								<li><a href="#" class="icon fb-icon">Facebook</a></li>
-								<li><a href="#" class="icon dribbble-icon">Dribbble</a></li>
+                                <li><a href="user.php?main=playlist&media_id=<?echo $media_id ?>" class="icon dribbble-icon" id="add_contact" >Playlist</a></li>
 								<li><a href="#" class="icon twitter-icon">Discussion</a></li>
 								<li><a href="#" class="icon pinterest-icon">Download</a></li>
-                                <li><a id="media_dislike" href="#" class="icon whatsapp-icon"><?php echo $dislike_times; ?></a></li>
-								<li><a id="media_like" href="#" class="icon "><?php echo $like_times; ?></a></li>
-								<li><a href="#" class="icon comment-icon">Comments</a></li>
+                                <li><a id="media_dislike" href="#" class="icon whatsapp-icon"><?php echo $dislike_times; ?> dislike</a></li>
+								<li><a id="media_like" href="#" class="icon "><?php echo $like_times; ?> like</a></li>
+								<li><a href="#add_comment" class="icon comment-icon">Comments</a></li>
                                 <li class="view"><?php echo $viewed_times+1 ?> Views</li>
 							</ul>
 						</div>
 					</div>
 					<div class="clearfix"> </div>
+
 					<div class="published">
 							<script>
 								$(document).ready(function () {
@@ -264,7 +285,7 @@ $(document).ready(function () {
 						<div class="all-comments-info">
                         <a href="#">All Comments (<?php echo $comments_count  ?>)</a>
 							<div class="box">
-								<form  id="add_comment">
+								<form  id="add_comment" method="post" action="handle.php">
 									<textarea id="comment_content" placeholder="Message" required=" "></textarea>
 									<input type="submit" class="submit" value="SEND" />
 									<div class="clearfix"> </div>
@@ -281,7 +302,7 @@ $(document).ready(function () {
 				<div class="col-md-4 single-right">
 					<h3>Up Next</h3>
         		    <div class="single-grid-right">
-                    <?php generate_up_next(); ?>
+                    <?php show_up_nexts($keyword); ?>
 			    </div>
 			</div>
 		<div class="clearfix"> </div>
