@@ -1,7 +1,7 @@
 <!doctype html>
 
 <head>
-<title>My Play a Entertainment Category Flat Bootstrap Responsive Website Template | single :: w3layouts</title>
+<title>Metube</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="My Play Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 

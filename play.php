@@ -73,7 +73,7 @@ else
 }
 
 increase_viewed($media_id);
-add_viewed($user_id, $media_id);
+add_viewed($local_user_id, $media_id);
 
 function generate_up_next($media_id,$user_id, $media_name, $viewed_times, $category)
 {

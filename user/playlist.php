@@ -46,7 +46,7 @@ function generate_slider($playlist)
     }
     if($playlist['media_id4'])
     {
-        $trs .= generate_trs('meida_id4', $playlist['media_id4'], $playlist_id);
+        $trs .= generate_trs('media_id4', $playlist['media_id4'], $playlist_id);
     }
     if($playlist['media_id5'])
     {
@@ -119,8 +119,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $playlist_id = $_POST['addmedia_playlist_id'];
         add_media_to_playlist($playlist_id, $media_id);
     }
-
-
 }
 
 if($_SERVER["REQUEST_METHOD"] == "GET")
