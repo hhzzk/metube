@@ -99,7 +99,7 @@
 				</div>
 
 				<div class="signin">
-                <a href="user.php" class="play-icon" ><?php echo $_SESSION['user_name']; ?></a>
+                <a href="user.php?main=profile" class="play-icon" ><?php echo $_SESSION['user_name']; ?></a>
 				</div>	
 
 				<div class="signin">

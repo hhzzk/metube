@@ -28,7 +28,8 @@ function get_messages($to_user_id)
 {
     $sql = "SELECT *
             FROM message 
-            WHERE to_user_id='$to_user_id'";    
+            WHERE to_user_id='$to_user_id'
+            ORDER BY date DESC";    
 
     $rows= db_select($sql);
     if($rows== false)

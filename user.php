@@ -56,5 +56,8 @@
         case "downloaded":
             include("./user/downloaded.php");
             break;
+        case "group":
+            include("./user/group.php");
+            break;
     }
 ?>

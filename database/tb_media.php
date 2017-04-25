@@ -64,6 +64,7 @@ function get_medias($order)
 {
     $sql = "SELECT *
             FROM media
+            WHERE share='public' 
             ORDER BY $order desc";    
 
     $rows= db_select($sql);
@@ -139,6 +140,7 @@ function get_recent()
 {
     $sql = "SELECT *
             FROM media
+            WHERE share='public' 
             ORDER BY upload_time desc
             LIMIT 4";    
 
@@ -157,7 +159,8 @@ function get_recommended()
 {
     $sql = "SELECT *
             FROM media
-            ORDER BY viewed_times desc
+            WHERE share='public' 
+            ORDER BY like_times desc
             LIMIT 4";    
 
     $rows= db_select($sql);
@@ -175,6 +178,7 @@ function get_popular()
 {
     $sql = "SELECT *
             FROM media
+            WHERE share='public' 
             ORDER BY viewed_times desc
             LIMIT 4";    
 
@@ -193,7 +197,8 @@ function get_media_by_category($category)
 {
     $sql = "SELECT *
             FROM media
-            WHERE category=$category";    
+            WHERE category=$category AND
+            share='public'";    
 
     $rows= db_select($sql);
     if($rows== false)
@@ -210,7 +215,8 @@ function get_media_by_keyword($keyword)
 {
     $sql = "SELECT *
             FROM media
-            WHERE keyword='$keyword'";    
+            WHERE keyword='$keyword' AND
+            share = 'public'";    
 
     $rows= db_select($sql);
     if($rows== false)
@@ -293,7 +299,8 @@ function basic_search($search_text)
     $sql = "SELECT *
             FROM media
             WHERE media_name 
-            RLIKE '.*${search_text}.*'"; 
+            RLIKE '.*${search_text}.*' AND 
+            share = 'public'"; 
 
     $rows= db_select($sql);
     if($rows== false)
@@ -314,7 +321,8 @@ function advance_search($args)
             FROM media
             WHERE DATEDIFF(CURDATE(), upload_time) < $args[upload_time] AND
             size > $args[min_size] and size < $args[max_size] AND
-            user_id=$args[author]
+            user_id=$args[author] AND
+            share = 'public'
             "; 
     }
     else

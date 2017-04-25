@@ -2,6 +2,11 @@
 <?php
 session_start();
 
+if(isset($_SESSION['user_id']))
+{
+    $local_user_id = $_SESSION['user_id']; 
+}
+
 include ("./templates/header.php");
 include ("./templates/navbar.php");
 include ("./templates/sidebar.php");
@@ -9,12 +14,44 @@ include("./database/tb_comment.php");
 include("./database/tb_user.php");
 include("./database/tb_media.php");
 include("./database/tb_history.php");
+include("./database/tb_contact.php");
 
 $config = parse_ini_file(__DIR__.'/config.ini');
+
+
+function check_is_blocked($user_id, $local_user_id)
+{
+   $contacts = get_contacts($user_id); 
+   if($contacts)
+   {
+        foreach($contacts as $contact)
+        {
+            if($contact['friend_id'] == $local_user_id and
+                $contact['is_block'] == 1) 
+            {
+                return true; 
+            }
+        }
+   }
+
+   return false;
+
+}
+
 
 $media_id = $_GET['media_id'];
 $media = get_media_by_id($media_id);
 $user_id = $media['user_id'];
+
+if(isset($_SESSION['user_id']))
+{
+    $local_user_id = $_SESSION['user_id']; 
+
+    if(check_is_blocked($user_id, $local_user_id))
+    {
+        return;
+    }
+}
 $media_name = $media['media_name'];
 $media_description = $media['description'];
 $viewed_times = $media['viewed_times']; 
@@ -243,7 +280,7 @@ $(document).ready(function () {
 							<ul>
 								<li><a href="#" class="icon fb-icon">Facebook</a></li>
                                 <li><a href="user.php?main=playlist&media_id=<?echo $media_id ?>" class="icon dribbble-icon" id="add_contact" >Playlist</a></li>
-								<li><a href="#" class="icon twitter-icon">Discussion</a></li>
+								<li><a href="user.php?main=group" class="icon twitter-icon">Discussion</a></li>
 								<li><a href="#" class="icon pinterest-icon">Download</a></li>
                                 <li><a id="media_dislike" href="#" class="icon whatsapp-icon"><?php echo $dislike_times; ?> dislike</a></li>
 								<li><a id="media_like" href="#" class="icon "><?php echo $like_times; ?> like</a></li>

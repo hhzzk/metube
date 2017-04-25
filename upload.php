@@ -1,12 +1,52 @@
-
-
-
 <?php
 session_start();
 
 include_once("database/tb_media.php");
+include_once("database/tb_subscription.php");
+include_once("database/tb_message.php");
+include_once("database/tb_contact.php");
 
 $user_id=$_SESSION['user_id'];
+
+
+function upload_send_message($file_name)
+{
+    $user_id=$_SESSION['user_id'];
+    $fans = get_fans($user_id); 
+    if($fans) 
+    {
+        foreach($fans as $fan)
+        {
+            $fan_user_id = $fan['user_id'];
+            $content = "Hi, there. I post a new media file ".$file_name.", welcome to watch";
+            $infos = [
+               'from_user_id' => $user_id, 
+               'to_user_id' => $fan_user_id, 
+               'content' => $content 
+            ];
+            add_message($infos);
+        }
+    }
+    $friends = get_contacts($user_id); 
+    if($friends) 
+    {
+        foreach($friends as $friend)
+        {
+            if(!$friend['is_block'])
+            {
+                $friend_user_id = $friend['friend_id'];
+                $content = "Hi, there. I post a new media file ".$file_name.", welcome to watch";
+                $infos = [
+                    'from_user_id' => $user_id, 
+                    'to_user_id' => $friend_user_id, 
+                    'content' => $content 
+                ];
+                add_message($infos);           
+            }
+
+        }
+    }
+}
 
 $uploadOk = 1;
 //Create Directory if doesn't exist
@@ -46,6 +86,12 @@ if(isset($_FILES['fileToUpload']))
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
+    
+        if($_POST['share_method'] == 'public')
+        {
+            upload_send_message($file_name);
+        }
+
     }
 }
 	

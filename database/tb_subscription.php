@@ -85,4 +85,21 @@ function get_subscriptions($user_id)
     }
 }
 
+function get_fans($channel_id)
+{
+    $sql = "SELECT *
+            FROM subscription 
+            WHERE channel_id=$channel_id";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
 ?>
