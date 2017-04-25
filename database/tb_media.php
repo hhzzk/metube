@@ -345,4 +345,19 @@ function advance_search($args)
     }
 }
 
+function get_keywords_in_media()
+{
+    $sql = " select keyword from media where 1";
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
 ?>

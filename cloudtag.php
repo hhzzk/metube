@@ -67,6 +67,7 @@ class WordCloud
     {
         $this->max = max($this->words);
  
+        $out = "";
         foreach ($this->words as $word => $freq)
         {
             if(!empty($word))
@@ -83,8 +84,20 @@ class WordCloud
     }
  
 }
+include("./database/tb_media.php");
 
-$txt = "The text to be turned into a cloud";
+$keywords = get_keywords_in_media();
+$txt = "";
+if($keywords)
+{
+    foreach($keywords as $keyword)
+    {
+        $temp = $keyword['keyword'].' ';
+        $txt .= $temp;
+    }
+}
+
+//$txt = "The The text to be turned into a cloud";
 $cloud = new WordCloud($txt);
-echo $cloud->showCloud(ture);
+echo $cloud->showCloud(true);
 ?>
