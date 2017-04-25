@@ -86,18 +86,34 @@ class WordCloud
 }
 include("./database/tb_media.php");
 
-$keywords = get_keywords_in_media();
-$txt = "";
-if($keywords)
+function cloudtag_layout()
 {
-    foreach($keywords as $keyword)
+    $keywords = get_keywords_in_media();
+    $txt = "";
+    if($keywords)
     {
-        $temp = $keyword['keyword'].' ';
-        $txt .= $temp;
+        foreach($keywords as $keyword)
+        {
+            $temp = $keyword['keyword'].' ';
+            $txt .= $temp;
+        }
     }
-}
 
-//$txt = "The The text to be turned into a cloud";
-$cloud = new WordCloud($txt);
-echo $cloud->showCloud(true);
+    //$txt = "The The text to be turned into a cloud";
+    $cloud = new WordCloud($txt);
+    echo $cloud->showCloud(true);
+}
 ?>
+
+<div class="col-md-offset-2 main">
+    <div class="main-grids">
+	    <div class="top-grids">
+	        <div class="recommended-info">
+	            <h3>Cloudtag</h3>
+            </div>
+            <hr>
+            <?php cloudtag_layout() ?>
+		</div>
+		</div>
+	</div>
+</div>

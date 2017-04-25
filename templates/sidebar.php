@@ -39,6 +39,7 @@
 					<li><a href="index.php?main=image" class="song-icon"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>Image</a></li>
 					<li><a href="index.php?main=medias" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Medias</a></li>
 					<li><a href="index.php?main=channels" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Channels</a></li>
+					<li><a href="index.php?main=cloudtag" class="news-icon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>Cloudtag</a></li>
 				  </ul>
 				  <!-- script-for-menu -->
 						<script>

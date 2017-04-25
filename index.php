@@ -22,6 +22,10 @@
     {
         include("./search.php"); 
     }
+    elseif($_GET['main'] == 'cloudtag')
+    {
+        include("./cloudtag.php"); 
+    }
     else
     {
         include("./category.php"); 
