@@ -82,8 +82,11 @@ function show_slides($type, $args=NULL)
                 $medias = get_history($user_id);
                 break;
             // For search
-            case "search":
+            case "basic_search":
                 $medias = basic_search($args);
+                break;
+            case "advance_search":
+                $medias = advance_search($args);
                 break;
         }
 

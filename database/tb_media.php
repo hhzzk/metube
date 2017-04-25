@@ -306,4 +306,35 @@ function basic_search($search_text)
     }
 }
 
+function advance_search($args)
+{
+    if($args['author'])
+    {
+        $sql = "SELECT *
+            FROM media
+            WHERE DATEDIFF(CURDATE(), upload_time) < $args[upload_time] AND
+            size > $args[min_size] and size < $args[max_size] AND
+            user_id=$args[author]
+            "; 
+    }
+    else
+    {
+         $sql = "SELECT *
+            FROM media
+            WHERE DATEDIFF(CURDATE(), upload_time) < $args[upload_time] AND
+            size > $args[min_size] and size < $args[max_size]
+            ";    
+    }
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows;  
+    }
+}
+
 ?>
