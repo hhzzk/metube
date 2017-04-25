@@ -281,7 +281,7 @@ $(document).ready(function () {
 								<li><a href="#" class="icon fb-icon">Facebook</a></li>
                                 <li><a href="user.php?main=playlist&media_id=<?echo $media_id ?>" class="icon dribbble-icon" id="add_contact" >Playlist</a></li>
 								<li><a href="user.php?main=group" class="icon twitter-icon">Discussion</a></li>
-								<li><a href="#" class="icon pinterest-icon">Download</a></li>
+                                <li><a href="download.php?media_id=<? echo $media_id ?>" id="media_download" class="icon pinterest-icon">Download</a></li>
                                 <li><a id="media_dislike" href="#" class="icon whatsapp-icon"><?php echo $dislike_times; ?> dislike</a></li>
 								<li><a id="media_like" href="#" class="icon "><?php echo $like_times; ?> like</a></li>
 								<li><a href="#add_comment" class="icon comment-icon">Comments</a></li>
