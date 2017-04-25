@@ -3,8 +3,8 @@
 session_start();
 
 include ("./templates/header.php");
-//include ("./templates/navbar.php");
-//include ("./templates/sidebar.php");
+include ("./templates/navbar.php");
+include ("./templates/sidebar.php");
 include("./database/tb_comment.php");
 include("./database/tb_user.php");
 include("./database/tb_media.php");
@@ -55,6 +55,9 @@ $user_id = $media['user_id'];
 $media_name = $media['media_name'];
 $media_description = $media['description'];
 $viewed_times = $media['viewed_times']; 
+$dislike_times = $media['dislike_times']; 
+$like_times = $media['like_times']; 
+$upload_time = $media['upload_time']; 
 $source_url = $config['media_dir_rp'].$user_id . '/' . $media_name;
 $comments = get_comments($media_id);
 $comments_count = count($comments);
@@ -97,31 +100,104 @@ function show_comments($comments)
 <script>
 
 $(document).ready(function () {    
-
-    $('#media_dislike').click(function(event){
+    $('#add_comment').submit(function(e){
+        e.preventDefault();
+        alert("dddd");
         var data = {
-            type    : "dislike",
-            meida_id : $("#media_id").val() 
+            type    : "comment",
+            media_id : $("#media_id").attr("value"), 
+            content: $("#comment_content").val()
         
         };
-        var dataToSend = JSON.stringify(data); 
 
         $.ajax(
             {
                 url: 'handle.php',
-                type:'GET',
-                data: dataToSend,
+                type:'POST',
+                data: data,
 
-                success: function(jsonResponse)
+                success: function(data)
                 {
-                    alert(jsonResponse); 
+                    if(data.status == "error")
+                    {
+                        alert("please login");
+                    }
+                    else
+                    {
+                        $('#show_comment').html(data.msg); 
+                    }
+                    //var dislike = parseInt($('#media_dislike').text());
                 },
 
                     error: function(){
-                        alert('vote fail');
+                        alert('vote failed');
+                    }
+            });
+        return false;
+    });
+
+    $('#media_dislike').click(function(event){
+        var data = {
+            type    : "dislike",
+            media_id : $("#media_id").attr("value") 
+        
+        };
+
+        $.ajax(
+            {
+                url: 'handle.php',
+                type:'POST',
+                data: data,
+
+                success: function(data)
+                {
+                    if(data.status == "error")
+                    {
+                        alert("please login");
+                    }
+                    else
+                    {
+                        $('#media_dislike').text(data.msg); 
+                    }
+                    //var dislike = parseInt($('#media_dislike').text());
+                },
+
+                    error: function(){
+                        alert('vote failed');
                     }
             });
     });
+    $('#media_like').click(function(event){
+        var data = {
+            type    : "like",
+            media_id : $("#media_id").attr("value") 
+        
+        };
+
+        $.ajax(
+            {
+                url: 'handle.php',
+                type:'POST',
+                data: data,
+
+                success: function(data)
+                {
+                    if(data.status == "error")
+                    {
+                        alert("please login");
+                    }
+                    else
+                    {
+                        $('#media_like').text(data.msg); 
+                    }
+                },
+
+                error: function(){
+                        alert('vote failed');
+                    }
+            });
+    });
+});
 
 
 
@@ -149,8 +225,8 @@ $(document).ready(function () {
 								<li><a href="#" class="icon dribbble-icon">Dribbble</a></li>
 								<li><a href="#" class="icon twitter-icon">Discussion</a></li>
 								<li><a href="#" class="icon pinterest-icon">Download</a></li>
-								<li><a id="media_dislike" href="#" class="icon whatsapp-icon">1 Dislike</a></li>
-								<li><a href="#" class="icon ">3 Like</a></li>
+                                <li><a id="media_dislike" href="#" class="icon whatsapp-icon"><?php echo $dislike_times; ?></a></li>
+								<li><a id="media_like" href="#" class="icon "><?php echo $like_times; ?></a></li>
 								<li><a href="#" class="icon comment-icon">Comments</a></li>
                                 <li class="view"><?php echo $viewed_times+1 ?> Views</li>
 							</ul>
@@ -176,7 +252,7 @@ $(document).ready(function () {
 							<div class="load_more">	
 								<ul id="myList">
 									<li>
-										<h4>Published on 15 Apri 2017</h4>
+                                    <h4>Published on <?php echo $upload_time ?></h4>
                                         <p> <?php echo $media_description; ?></p>
 									</li>
 
@@ -188,21 +264,15 @@ $(document).ready(function () {
 						<div class="all-comments-info">
                         <a href="#">All Comments (<?php echo $comments_count  ?>)</a>
 							<div class="box">
-								<form>
-									<textarea placeholder="Message" required=" "></textarea>
-									<input type="submit" value="SEND">
+								<form  id="add_comment">
+									<textarea id="comment_content" placeholder="Message" required=" "></textarea>
+									<input type="submit" class="submit" value="SEND" />
 									<div class="clearfix"> </div>
 								</form>
 							</div>
 						</div>
-						<div class="media-grids">
-<?php
-
-show_comments($comments);
-
-
-?>
-
+						<div class="media-grids" id="show_comment">
+                        <?php show_comments($comments); ?>
 						</div>
 					</div>
 				</div>

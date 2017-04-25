@@ -1,3 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Media Upload</title>
+</head>
+<body>
+					<div class="upload-file">
+							<form method="post" action="upload.php" enctype="multipart/form-data" >
+								  <p style="margin:0; padding:0">
+										<input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+											Add a Media: <label style="color:#663399"><em> (Each file limit 10M)</em></label><br/>
+										<input type="file" id="fileToUpload" name="fileToUpload"  size="50"><br/>
+										Title:  <input type="text" name="title" /> <br>
+										Keyword: <input type="text" name="keyword" /> <br>
+										<input  type="hidden" /> Description:<br>
+										<textarea name='description' cols="50" rows="10"> </textarea>
+										<p><b> Please choose how to share the file: </b></p>
+										<input type="radio" name="share" value="private">Private<br>
+										<input type="radio" name="share" value="public">Public<br>																				<input type="radio" name="share" value="friend">Friend<br>
+										<p><b> Please choose whether to allow to discuss the file: </b></p>
+										<input type="radio" name="discuss" value="allow-discuss">allow discuss<br>
+										<p><b> Please choose whether to allow to rate the file: </b></p>
+										<input type="radio" name="rate" value="allow-rate">allow rate<br>
+
+                                        <select name="category">
+                                            <option value=1001>Movie</option>
+                                            <option value=1002>Cartoon</option>
+                                            <option value=1003>Sport</option>
+                                            <option value=2001>Song</option>
+                                            <option value=2002>Talkshow</option>
+                                            <option value=3000>Image</option>
+										<input value="Upload" name="submit" type="submit" /><br>
+								  </p>
+							</form>
+					</div>
+
+</body>
+</html>
+
+
+
 <?php
 session_start();
 
@@ -22,7 +63,7 @@ if(isset($_FILES['fileToUpload']))
         $uploadOk = 0;
     }
     // Check file size
-    if ($_FILES['fileToUpload']['size'] > 10000000) {
+    if ($_FILES['fileToUpload']['size'] > 500000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
@@ -50,87 +91,3 @@ if(isset($_FILES['fileToUpload']))
 }
 	
 ?>
-
-<div class="col-md-offset-2 main">
-
-    <div class="main-grids">
-	    <div class="top-grids">
-	        <div class="recommended-info">
-	            <h3>Upload file</h3>
-            </div>
-
-<div class="container" >
-
-<form class="col-sm-5 h5">
-
-  <div class="form-group ">
-    <label for="exampleInputFile">Multimedia file input</label>
-    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-  </div>
-
-  <div class="form-group ">
-    <label for="exampleInputFile">Choose cover image</label>
-    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-  </div>
-
-  <div class="form-group">
-    <label for="exampleSelect1">Category</label>
-    <select class="form-control" id="exampleSelect1">
-      <option value=1001>Movie</option>
-      <option value=1002>Cartoon</option>
-      <option value=1003>Sport</option>
-      <option value=2001>Song</option>
-      <option value=2002>Talkshow</option>
-      <option value=3000>Image</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="exampleInputEmail1">Keywords</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="keywords">
-    <small id="emailHelp" class="form-text text-muted">Using ';' to seprate and maxmium is 3</small>
-  </div>
-
-  <div class="form-group">
-    <label for="exampleTextarea">Description</label>
-    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-  </div>
-
-  <div class="form-group">
-    <label for="exampleSelect1">Who can view or download this media</label>
-    <select class="form-control" id="exampleSelect1">
-      <option>Public</option>
-      <option>Private</option>
-      <option>Friends</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="exampleSelect1">Comment is allowed</label>
-    <select class="form-control" id="exampleSelect1">
-      <option>Yes</option>
-      <option>No</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="exampleSelect1">Rate is allowed</label>
-    <select class="form-control" id="exampleSelect1">
-      <option>Yes</option>
-      <option>No</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="exampleInputEmail1">Users to block</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="username; username">
-    <small id="emailHelp" class="form-text text-muted">Using ';' to seprate</small>
-  </div>
-
-  <button type="submit" class="btn btn-primary">Upload</button>
-</form>
-
-  </div>
-  </div>
-  </div>
-  </div>

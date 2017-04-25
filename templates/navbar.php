@@ -94,7 +94,7 @@
 			<div class="header-top-right1"  <?php if (!isset($_SESSION['user_id'])){?>style="display:none"<? } ?> >
 
 				<div class="file">
-                <a href="user.php?main=upload" >Upload</a>
+                <a href="upload.php" >Upload</a>
 				</div>
 
 				<div class="signin">

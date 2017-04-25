@@ -1,8 +1,5 @@
 <?php
 
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
-
 include_once("db_conn.php");
 
 function is_user_exist($email)

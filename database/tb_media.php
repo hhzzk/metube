@@ -228,6 +228,40 @@ function get_media_by_id($media_id)
     }
 }
 
+function increase_like($media_id)
+{
+    $sql = "UPDATE media
+            SET like_times = like_times+1 
+            WHERE media_id=$media_id";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows[0];  
+    }
+}
+
+function increase_dislike($media_id)
+{
+    $sql = "UPDATE media
+            SET dislike_times = dislike_times+1 
+            WHERE media_id=$media_id";    
+
+    $rows= db_select($sql);
+    if($rows== false)
+    {
+        return false;
+    }
+    else
+    {
+       return $rows[0];  
+    }
+}
+
 function increase_viewed($media_id)
 {
     $sql = "UPDATE media
