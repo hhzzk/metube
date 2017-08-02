@@ -6,4 +6,7 @@ The URL: http://webapp.cs.clemson.edu/~jinruiw/web/index.php
 
 - Modify config.ini
 
-- Create a parallel directory with this repo called media.
+- Move directory media out of metube:
+```
+mv -r ./media ../
+```

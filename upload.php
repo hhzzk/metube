@@ -70,7 +70,7 @@ if(isset($_FILES['fileToUpload']))
     // if everything is ok, try to upload file
     } else {
     if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $upload_file)) {
-        chmod($upload_file, 644);    
+        chmod($upload_file, 0755);    
 
         $infos['media_name'] = $file_name;
         $infos['description'] = $_POST['description'];
